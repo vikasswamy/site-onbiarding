@@ -1,0 +1,59 @@
+
+    <div  [ngClass]="clicked ? 'darSideBar' : 'left-side'">
+        
+            <div *ngIf="!clicked" class="content">
+                <div  class="side-wrapper">
+                    <div class="side-title">Upload Floor Plan</div>
+                    <div class="side-menu">
+                            <!-- <file-pond #myPond 
+                            [options]="pondOptions" 
+                            [files]="pondFiles"
+                            (oninit)="pondHandleInit()"
+                            (onaddfile)="pondHandleAddFile($event)"
+                            (onactivatefile)="pondHandleActivateFile($event)">
+                        </file-pond>
+                 -->
+                 <div class="container">
+                  
+                        <div class="row text-center">
+                            <div class="col-xs-4">
+                            <div class="counter" (click)="openDialog('image/jpeg')">
+                      <mat-icon class="fa fa-code fa-2x">image</mat-icon>
+                       <p class="count-text ">Upload <br> Image</p>
+                    </div>
+                            </div>
+                              <div class="col-xs-4">
+                               <div class="counter" (click)="openDialog('image/png')" >
+                                <mat-icon class="fa fa-code fa-2x">photo_size_select_large</mat-icon>
+                                <p class="count-text ">Upload <br> Png</p>
+                    </div>
+                              </div>
+                              
+                              <div class="col-xs-4">
+                              <div class="counter" (click)="openDialog('application/pdf')">
+                                <mat-icon class="fa fa-code fa-2x">picture_as_pdf</mat-icon>
+                                <p class="count-text ">Upload <br> PDF</p>
+                    </div>
+                              </div>
+                         </div>
+                        
+                </div>
+                 
+                 
+                    </div>
+                </div>  
+                <div class="side-wrapper">
+                    
+                    <div class="side-title">Draw Shapes</div>
+                    <div class="side-menu">
+                        Shape containers comes Here
+                    </div>
+                </div>
+            </div>
+      
+       
+    
+        
+    
+    </div>
+

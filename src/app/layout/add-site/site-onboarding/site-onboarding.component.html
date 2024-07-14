@@ -1,0 +1,168 @@
+<div class="main-container">
+  <div class="content-wrapper">
+      
+    <div class="content-section">
+      <div class="content-section-title">Search for your site location and Drag the marker for accurate site Coordinates</div>
+      <div class="container-fluid " >
+        <div class="row glass-row">
+            <div class="col-lg-9 col-md-6 col-sm-12">
+              <div class="card glass-card">
+                
+                <input
+                placeholder="search for location"
+                autocorrect="off"
+                autocapitalize="off"
+                spellcheck="off"
+                type="text"
+                autocomplete="off"
+                class="form-control"
+                id="search"
+                #search
+              />
+                <div class="card-body" style=" width: 100%;
+                 height: calc(35rem)">
+                  
+                  <div id="mapa-mapbox"></div>
+                </div>
+         
+              </div>
+            </div>
+            <div class="col-lg-3 col-md-6 col-sm-12">
+              <div class="card-body">
+              
+              <div class="card glass-card">
+                <button mat-icon-button [mat-dialog-close]="'close'" (click)="openDialog()" style="right:3px;top:3px;position: absolute; border: none;">
+                  <mat-icon>image</mat-icon></button>
+              <div class="container mt-5 mb-5">
+              
+                <form (ngSubmit)="onSubmit(bookMovieForm)" #bookMovieForm="ngForm">
+                  <div class="form-group">
+                    <label for="userName">Site Name</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      placeholder="Site Name"
+                      name="SiteName"
+                      #Site="ngModel"
+                      [class.is-valid]="(Site.dirty || Site.touched)"
+                      [class.is-invalid]="Site.invalid && (Site.dirty || Site.touched)"
+                      [(ngModel)]="form.siteName"
+                      required
+                    />
+                    <div class="form-control-feedback" *ngIf="Site.errors && (Site.dirty || Site.touched)">
+                      <p *ngIf="Site.errors">Site Name is required</p>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="name">Site Location </label>
+                    <div class="d-flex justify-content-around">
+                      <input
+                      type="text"
+                      class="form-control"
+                      placeholder="Latitude"
+                      id="lat"
+                      name="Latitude"
+                      #Latitude="ngModel"
+                      [(ngModel)]="form.lat"
+                      [class.is-valid]="(Latitude.dirty || Latitude.touched)"
+                      [class.is-invalid]="Latitude.invalid && (Latitude.dirty || Latitude.touched)"
+                      required
+                    />
+                    <input
+                    type="text"
+                    class="form-control"
+                    placeholder="Longitude"
+                    id="long"
+                    name="Langitude"
+                    #Langitude="ngModel"
+                    [(ngModel)]="form.lan"
+                    [class.is-valid]="(Langitude.dirty || Langitude.touched)"
+                    [class.is-invalid]="Langitude.invalid && (Langitude.dirty || Langitude.touched)"
+                    required
+                  />
+                  <div class="form-control-feedback" *ngIf="Langitude.errors && (Langitude.dirty || Langitude.touched)">
+                    <p *ngIf="Langitude.errors">Coordinates are required</p>
+                  </div>
+                    </div>
+                    <!-- <select
+                      class="form-control"
+                      name="name"
+                      #name="ngModel"
+                      [(ngModel)]="model.name"
+                      required
+                    >
+                      <option *ngFor="let m of movies" [value]="m">{{ m }}</option>
+                    </select> -->
+                  </div>
+                  <div class="form-group">
+                    <label for="cinemaHall">Address</label>
+                    <textarea placeholder="Address" class="form-control"
+                    name="address"
+                    #address="ngModel"
+                     [(ngModel)]="form.siteAddress" 
+                    [class.is-valid]="(address.dirty || address.touched)"
+                    [class.is-invalid]="address.invalid && (address.dirty || address.touched)"
+                     required>
+                    </textarea>
+                    <div class="form-control-feedback" *ngIf="address.errors && (address.dirty || address.touched)">
+                      <p *ngIf="address.errors">Address is required</p>
+                    </div>
+                    <!-- <select
+                      class="form-control"
+                      name="cinemaHall"
+                      #cinemaHall="ngModel"
+                      [(ngModel)]="model.cinemaHall"
+                      required
+                    >
+                      <option class="menu"  *ngFor="let c of cinemaHalls" [value]="c">
+                        <p class="dropdown"> {{ c }}</p></option>
+                    </select> -->
+                  </div>
+                  <div class="form-group">
+                    <label for="timing">TimeZone</label>
+                    <textarea class="form-control" placeholder="TimeZome" [(ngModel)]="form.siteTimeZone" 
+                    name="TimeZone"
+                    #TimeZone="ngModel"
+                    [class.is-valid]="(address.dirty || address.touched)"
+                    [class.is-invalid]="address.invalid && (address.dirty || address.touched)"
+                    required>
+                    </textarea>
+                    <div class="form-control-feedback" *ngIf="TimeZone.errors && (TimeZone.dirty || TimeZone.touched)">
+                      <p *ngIf="TimeZone.errors">TimeZone required</p>
+                    </div>
+                    <!-- <select
+                      class="form-control"
+                      name="timing"
+                      #timing="ngModel"
+                      [(ngModel)]="model.timing"
+                      required
+                    >
+                      <option class="dropdown" *ngFor="let mt of movieTimings" [value]="mt">{{ mt }}</option>
+                    </select> -->
+                  </div>
+                
+                  <button
+                    type="submit"
+                    class="content-button status-button"
+                    [disabled]="!bookMovieForm.valid"
+
+                  >
+                    Submit
+                  </button>
+                  <button type="button" class="content-button status-button open" (click)="bookMovieForm.resetForm({})">Reset</button>
+                </form>
+              </div>
+            </div>
+              </div>
+            </div>
+          </div>
+    </div>
+    </div>
+    
+  </div>
+   
+        
+     
+   
+   
+</div>

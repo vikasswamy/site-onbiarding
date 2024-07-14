@@ -1,0 +1,137 @@
+<div class="main-container">
+    <div class="content-wrapper">
+        
+            <div class="content-section-title">Provide your Facilty Location and Facility outline form Map</div>
+         
+        <div class="container-fluid " >
+            <div class="row glass-row">
+                <div class="col-lg-9 col-md-6 col-sm-12">
+                    <div class="card glass-card">
+                
+                        <div class="card-body" style=" width: 100%;
+                         height: calc(35rem)">
+                          
+                          <div id="facility-map" ></div>
+                        </div>
+                 
+                      </div>
+                </div>
+                <div class="col-lg-3 col-md-6 col-sm-12">
+                    <div class="card-body">
+                    
+                    <div class="card glass-card">
+                        <button mat-icon-button [mat-dialog-close]="'close'" (click)="openDialog()" style="right:3px;top:3px;position: absolute; border: none;">
+                            <mat-icon>image</mat-icon></button>
+                        <div class="container mt-5 mb-5">
+                        
+                          <form (ngSubmit)="onSubmit(Facilityform)" #Facilityform="ngForm">
+                            <div class="form-group">
+                              <label for="userName">Site Name</label>
+                             <select
+                                class="form-control"
+                                name="Site"
+                                #Site="ngModel"
+                                [(ngModel)]="form.siteId"
+                                [class.is-valid]="(Site.dirty || Site.touched)"
+                                [class.is-invalid]="Site.invalid && (Site.dirty || Site.touched)"
+                                required
+                                disabled="true"
+                              >
+                                <option *ngFor="let s of sites" [value]="s.siteId">{{ s.siteName }}</option>
+                              </select>
+                              <div class="form-control-feedback" *ngIf="Site.errors && (Site.dirty || Site.touched)">
+                                <p *ngIf="Site.errors">Site is required</p>
+                              </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="userName">Facility Name</label>
+                                <input
+                                  type="text"
+                                  class="form-control"
+                                  placeholder="Facility Name"
+                                  name="Facilityname"
+                                  #Facilityname="ngModel"
+                                  [class.is-valid]="(Facilityname.dirty || Facilityname.touched)"
+                                  [class.is-invalid]="Facilityname.invalid && (Facilityname.dirty || Facilityname.touched)"
+                                  [(ngModel)]="form.facilityName"
+                                  required
+                                />
+                                <div class="form-control-feedback" *ngIf="Facilityname.errors && (Facilityname.dirty || Facilityname.touched)">
+                                  <p *ngIf="Facilityname.errors">Facility Name is required</p>
+                                </div>
+                              </div>
+                            <div class="form-group">
+                              <label for="name">Facility  Location </label>
+                              <div class="d-flex justify-content-around">
+                                <input
+                                type="text"
+                                class="form-control"
+                                placeholder="Latitude"
+                                id="lat"
+                                name="Latitude"
+                                #Latitude="ngModel"
+                                [(ngModel)]="form.lat"
+                                [class.is-valid]="(Latitude.dirty || Latitude.touched)"
+                                [class.is-invalid]="Latitude.invalid && (Latitude.dirty || Latitude.touched)"
+                                required
+                              />
+                              <input
+                              type="text"
+                              class="form-control"
+                              placeholder="Longitude"
+                              id="long"
+                              name="Langitude"
+                              #Langitude="ngModel"
+                              [(ngModel)]="form.lan"
+                              [class.is-valid]="(Langitude.dirty || Langitude.touched)"
+                              [class.is-invalid]="Langitude.invalid && (Langitude.dirty || Langitude.touched)"
+                              required
+                            />
+                            <div class="form-control-feedback" *ngIf="Langitude.errors && (Langitude.dirty || Langitude.touched)">
+                              <p *ngIf="Langitude.errors">Coordinates are required</p>
+                            </div>
+                              </div>
+                              <!-- <select
+                                class="form-control"
+                                name="name"
+                                #name="ngModel"
+                                [(ngModel)]="model.name"
+                                required
+                              >
+                                <option *ngFor="let m of movies" [value]="m">{{ m }}</option>
+                              </select> -->
+                            </div>
+                            <div class="form-group">
+                              <label for="cinemaHall">facility Layout</label>
+                              <textarea placeholder="facility Layout" class="form-control"
+                              name="Layout"
+                              #Layout="ngModel"
+                               [(ngModel)]="form.facilityLayout" 
+                              [class.is-valid]="(Layout.dirty || Layout.touched)"
+                              [class.is-invalid]="Layout.invalid && (Layout.dirty || Layout.touched)"
+                               required>
+                              </textarea>
+                              <div class="form-control-feedback" *ngIf="Layout.errors && (Layout.dirty || Layout.touched)">
+                                <p *ngIf="Layout.errors">Draw outline geometry on map </p>
+                              </div>
+                            </div>
+                          
+                            <button
+                              type="submit"
+                              class="content-button status-button"
+                              [disabled]="!Facilityform.valid"
+          
+                            >
+                              Submit
+                            </button>
+                            <button type="button" class="content-button status-button open" (click)="Facilityform.resetForm({})">Reset</button>
+                          </form>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+</div>

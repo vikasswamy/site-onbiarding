@@ -2,10 +2,11 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
+    "typeRoots": ["./node_modules/@types/","googlemaps"],
     "baseUrl": "./",
     "outDir": "./dist/out-tsc",
     "forceConsistentCasingInFileNames": true,
-    "strict": true,
+    "strict": false,
     "noImplicitOverride": true,
     "noPropertyAccessFromIndexSignature": true,
     "noImplicitReturns": true,
@@ -22,7 +23,8 @@
     "lib": [
       "ES2022",
       "dom"
-    ]
+    ],
+    "types": ["googlemaps"]
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,
