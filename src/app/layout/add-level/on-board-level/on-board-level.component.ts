@@ -23,6 +23,8 @@ export class OnBoardLevelComponent implements OnInit, AfterViewInit{
   fileName: any;
   fileType: any;
   obtainedFaciltiyname: any;
+  marker: maptalks.Marker;
+  imageLayer:any;
 
   constructor(private dashboardservice:MaplocationService,private router:ActivatedRoute,private dialog:MatDialog,private blobService:FilesService){
      this.router.queryParams.subscribe((params:any) => {
@@ -79,25 +81,70 @@ export class OnBoardLevelComponent implements OnInit, AfterViewInit{
 
       this.map.getLayer('vector').bringToFront();
       this.map.fitExtent(this.polygon.getExtent(), 0);
-    
+     this. imageLayer = new maptalks.ImageLayer('images');
+  
+        this.map.addLayer(this.imageLayer)
+     // this.create_rotate_marker();
+    }
+    create_rotate_marker(){
+    //  this.marker = new maptalks.Marker(
+    //     this.polygon.getCenter(),  // Replace with your coordinates
+    //     {
+    //         symbol: {
+    //           visible : true,
+    //           editable : true,
+    //           cursor : 'pointer',
+    //           draggable : false,
+    //           dragShadow : false, // display a shadow during dragging
+    //           drawOnAxis : null,
+    //             'markerFile'   : 'https://storagesmartroute27.blob.core.windows.net/filesupload/newhome/png/Ground_Floor.png',
+    //             'markerWidth': 100,
+    //             'markerHeight': 100,
+    //             'markerFill': '#f00',
+    //             'markerDx': 0,
+    //           'markerDy': 0,
+    //           'markerRotation': 0 
+    //                   }
+    //     }
+    // ).addTo(this.layer).bringToFront();
+    this.imageLayer = new maptalks.ImageLayer('imageLayer',[{
+      'url': 'https://storagesmartroute27.blob.core.windows.net/filesupload/newhome/png/Ground_Floor.png', 
+      'extent': this.polygon.getExtent(), 
+      'visible': true,
+      'crossOrigin': 'anonymous',  // Specify cross-origin setting if loading external images
+      'attribution': ''
+    }]);
+    this.map.addLayer(this.imageLayer).bringToFront();
+  // Add the image marker to the ImageLayer
+
+
+    }
+    startEdit() {
+      this.marker.startEdit();
+    }
+    endEdit() {
+      // this.marker.endEdit();
+      this.imageLayer.setRotation(45);
+    }
+    rotateMarker(){
+     this.polygon.rotate(45, this.polygon.getCenter());
+      console.log(this.imageLayer);
+     
     }
     receiveDataFromChild(data: any) {
-      const formData = new FormData();
-      formData.append('file', data);
-        console.log(data.name,"Filename"); var imageLayer = new maptalks.ImageLayer('images',
-          [
-            {
-              url : data,
-              extent: this.polygon.getExtent(),
-              opacity : 1,
-              altitude: 10,
-            }
-          ]);
-  
-        this.map.addLayer(imageLayer).bringToFront();
+      console.log(data,"Image from Side nav")
       
+        this.imageLayer.setImages([{
+          'url': data, 
+          'extent': this.polygon.getExtent(), 
+          'visible': true,
+          'crossOrigin': 'anonymous',  // Specify cross-origin setting if loading external images
+          'attribution': '',
+          'forceRenderOnRotating':true
+        }])
       // You can handle the received data here
     }
+
   onSubmit(Data:any) {}
   
 }

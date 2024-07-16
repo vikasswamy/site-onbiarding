@@ -4,46 +4,16 @@
     width: auto;
     height: 90vh;
   }
-//   .card {
-//     border-radius: 10px;
-//     box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.3);
-//     width: 100px;
-//     height: 100px;
-//     background-color: #ffffff;
-//     padding: 10px 30px 40px;
-//   }
-  
-.filepond-container {
-    background-color:rgb(146 151 179 / 13%);
-    margin: 10px 5px;
-    min-width: 3.7rem;
-    color:#fff;
-    max-width:auto;
-    height:auto ;
-    display: block;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    border-radius: 5px;
-    cursor: pointer;
+ 
+  .custom-input-image {
+    opacity: 0;
+    filter: alpha(opacity=0);
+    position: relative;
+    width: 44px;
+    display: none;
   }
-  
-  /* Style the file input */
-  .filepond--root .filepond--label-action {
-    background-color: #3498db;
-    color: transparent;
-    padding: 10px 20px;
-    //border-radius: 5px;
-    cursor: pointer;
-  }
-  
-  /* Style the upload indicator */
-  .filepond--panel-root .filepond--panel-upload-progress {
-    background-color: #2ecc71;
-    height: 5px;
-    margin-top: 10px;
-  }
-  
+
+
   .counter {
     background-color:rgb(146 151 179 / 13%);
     margin: 10px 5px;

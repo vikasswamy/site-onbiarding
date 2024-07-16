@@ -22,6 +22,17 @@
                                      height: calc(35rem)">
                                       
                                       <div id="level-map" ></div>
+                                      <div class="pane">
+                                      <button mat-fab color="primary" aria-label="normal button" (click)="startEdit()">
+                                        <mat-icon  matTooltip="Start Edit">edit</mat-icon>
+                                      </button>
+                                      <button mat-fab color="primary" aria-label="normal button" (click)="endEdit()">
+                                        <mat-icon  matTooltip="Done">done_all</mat-icon>
+                                      </button>
+                                      <button mat-fab color="primary" aria-label="normal button" (click)="rotateMarker()">
+                                        <mat-icon  matTooltip="Done">crop_rotate</mat-icon>
+                                      </button>
+                                    </div>
                                     </div>
                              
                                   </div>

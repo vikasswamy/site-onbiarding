@@ -1,0 +1,45 @@
+<div class="backdrop">
+    <mat-card class="openAlertStyles" style="width: auto; height: auto;">
+      
+        <div class="d-flex" style="align-items: center; padding-bottom: 10px;padding-left: 15px;">
+          <span class="header-card-text" style="min-width: 180px;"> Preview PDF  </span>
+          <button mat-icon-button (click)="dialogclose()" style="right:3px;top:3px;position: absolute; border: none;">
+            <mat-icon>close</mat-icon></button>
+        </div>
+        <hr style="border: 1px solid white !important; opacity:1;margin-top: 0px; width: 92%;margin-left:5px;">
+        <div class="scroll-cont"
+          style="margin-right: 5px; margin-left: 5px; background-color: linear-gradient(to right, #5f6063, #5b5c5f);">
+          <div class="pdf-container">
+            <pdf-viewer
+          
+      [src]="pdfSrc"
+      [render-text]="true"
+      [zoom]="1"
+      [page]="currentpage"
+      [show-all]="false"
+      [original-size]="true"
+      [fit-to-page]="true"
+      (after-load-complete)="afterLoadComplete($event)"
+      style="display: block; width: 500px;height: auto; position: relative;"
+    >
+    </pdf-viewer>
+          </div>
+       
+   
+    
+          
+          
+          
+  
+      </div>
+        <mat-dialog-actions align="end">
+          <mat-progress-bar *ngIf="!pdfSrc" color="primary" mode="indeterminate"></mat-progress-bar>
+          <div class="btn-group d-flex" id="btn-group">
+            <button class="content-button status-button open" mat-dialog-close>Cancel</button>
+            <button class="content-button status-button" (click)="converttoImage()">Proceed</button>
+          </div>
+        </mat-dialog-actions>
+     
+      
+</mat-card>
+</div>

@@ -17,20 +17,25 @@
                   
                         <div class="row text-center">
                             <div class="col-xs-4">
-                            <div class="counter" (click)="openDialog('image/jpeg')">
-                      <mat-icon class="fa fa-code fa-2x">image</mat-icon>
+                            <div class="counter" (click)="openFileInput()" >
+                            <input #jpgInput type="file" name="file" class="custom-input-image" (change)="onFileSelected($event)"  accept=".jpg,.img"> 
+                           
+                                <mat-icon class="fa fa-code fa-2x">image</mat-icon>
                        <p class="count-text ">Upload <br> Image</p>
                     </div>
                             </div>
                               <div class="col-xs-4">
-                               <div class="counter" (click)="openDialog('image/png')" >
+                               <div class="counter" (click)="openPngInput()" >
+                                <input #pngInput type="file" name="file" class="custom-input-image" (change)="onFileSelected($event)"  accept=".png"> 
+
                                 <mat-icon class="fa fa-code fa-2x">photo_size_select_large</mat-icon>
                                 <p class="count-text ">Upload <br> Png</p>
                     </div>
                               </div>
                               
                               <div class="col-xs-4">
-                              <div class="counter" (click)="openDialog('application/pdf')">
+                              <div class="counter" (click)="openpdfInput()">
+                                <input #pdfInput type="file" name="file" class="custom-input-image" (change)="onFileSelected($event)"  accept=".pdf"> 
                                 <mat-icon class="fa fa-code fa-2x">picture_as_pdf</mat-icon>
                                 <p class="count-text ">Upload <br> PDF</p>
                     </div>

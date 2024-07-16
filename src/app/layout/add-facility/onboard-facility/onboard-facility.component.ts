@@ -249,7 +249,8 @@ ngAfterViewInit(): void {
     });
     dialogRef.afterClosed().subscribe((dialogData:any) => {
       console.log(dialogData);
-      this.file=dialogData.data
+      let reader = new FileReader();
+      
     })
   }
 }

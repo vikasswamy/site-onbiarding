@@ -7,6 +7,16 @@
  border-radius: 5px;
  right: 0;
  }
+ .pane {
+    background: none;
+    line-height: 28px;
+    color: #fff;
+    z-index: 10;
+    position: absolute;
+    top: 30px;
+    left: 30px;
+    display: flex;
+}
  #lat{
     width: 50%;
     margin: 5px;
