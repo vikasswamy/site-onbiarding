@@ -12,10 +12,12 @@ import { ChildMenuComponent } from './child-menu/child-menu.component';
 import { FilePondModule, registerPlugin } from 'ngx-filepond';
 import * as FilePondPluginFileValidateType from 'filepond-plugin-file-validate-type';
 import { UploadFileComponent } from './upload-file/upload-file.component';
+import { AddDeviceformComponent } from './add-deviceform/add-deviceform.component';
+import { FormsModule } from '@angular/forms';
 registerPlugin(FilePondPluginFileValidateType);
 
 @NgModule({
-    imports: [CommonModule, NgbCarouselModule, NgbAlertModule, DashboardRoutingModule,AppMaterialModule,FilePondModule],
-    declarations: [DashboardComponent, TimelineComponent, NotificationComponent, ChatComponent, MenuItemComponent, ChildMenuComponent,UploadFileComponent]
+    imports: [CommonModule, NgbCarouselModule, NgbAlertModule, DashboardRoutingModule,AppMaterialModule,FilePondModule,FormsModule],
+    declarations: [DashboardComponent, TimelineComponent, NotificationComponent, ChatComponent, MenuItemComponent, ChildMenuComponent,UploadFileComponent, AddDeviceformComponent]
 })
 export class DashboardModule {}

@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { BehaviorSubject, Observable } from "rxjs";
+import { BehaviorSubject,throwError,Observable, retry, catchError } from 'rxjs';
 import { HttpClient } from "@angular/common/http";
 import { shareReplay } from "rxjs/operators";
 import { environment } from "src/environments/environment.development";
@@ -19,7 +19,8 @@ export class MaplocationService {
   
   private facilityLocation = new BehaviorSubject <any>([]);
    locateFacility = this.facilityLocation.asObservable();
-   
+  private errorMessage=new BehaviorSubject<any>('');
+  obtainedError = this.errorMessage.asObservable();
   private levelParams =new BehaviorSubject <any>([]);
   addlevelData = this.levelParams.asObservable();
   private polygondata = new BehaviorSubject <any>([]);
@@ -58,6 +59,104 @@ export class MaplocationService {
     const params = Object.keys(query).map(key => `${key}=${query[key]}`).join('&');
     return `//maps.googleapis.com/maps/api/js?${params}&language=fr`;
   }
+  handleError(error) {
+    let errorMessage = '';
+    if (error.error instanceof ErrorEvent) {
+      // client-side error
+      errorMessage = `Error: ${error.error.message}`;
+    } else {
+      // server-side error
+      errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
+    }
+    //window.alert(errorMessage);
+    this.errorMessage.next(errorMessage);
+    return throwError(errorMessage);
+  }
+  addLevel(data:any){
+    return this.http.post(
+      environment.apiBaseUrl + `/Levels`,
+      data
+    ).pipe(
+      retry(1),
+      catchError(this.handleError)
+    );
+  }
+  addDevice(data:any){
+    return this.http.post(
+      environment.apiBaseUrl + `/Devices`,
+      data
+    ).pipe(
+      retry(1),
+      catchError(this.handleError)
+    );
+  }
+  getAlldDevice(){
+    return this.http.get(
+      environment.apiBaseUrl + `/Devices`
+    ).pipe(
+      retry(1),
+      catchError(this.handleError)
+    );
+  }
+  updateLevel(data:any){
+    return this.http.put(
+      environment.apiBaseUrl + `/Levels/updateLevel`,
+      data
+    ).pipe(
+      retry(1),
+      catchError(this.handleError)
+    );
+  }
+  deleteLevel(levelId:any){
+    return this.http.delete(
+      environment.apiBaseUrl+`/Levels/${levelId}`
+    ).pipe(
+      retry(1),
+      catchError(this.handleError)
+    );
+  }
+  deletespace(sapceId:any){
+    return this.http.delete(
+      environment.apiBaseUrl+`/Spaces/${sapceId}`
+    ).pipe(
+      retry(1),
+      catchError(this.handleError)
+    );
+  }
+  getLevelsByFacilityId(Id:any){
+    return this.http.get(
+      environment.apiBaseUrl+`/Levels/byFacility/${Id}`
+    ).pipe(
+      retry(1),
+      catchError(this.handleError)
+    );
+  }
+  getLevelsByLevelName(data:any){
+    return this.http.get(
+      environment.apiBaseUrl+`/Levels/byFacility/${data.facilityId}/byLevelName/${data.levelName}`
+    ).pipe(
+      retry(1),
+      catchError(this.handleError)
+    );
+  }
+  addSpaces(data:any){
+    return this.http.post(
+      environment.apiBaseUrl + `/Spaces`,
+      data
+    ).pipe(
+      retry(1),
+      catchError(this.handleError)
+    );
+  }
+  updateSpace(data:any){
+    return this.http.put(
+      environment.apiBaseUrl + `/Spaces/updateSpace`,
+      data
+    ).pipe(
+      retry(1),
+      catchError(this.handleError)
+    );
+  }
   getAllSites(){
     return this.http.get(
       environment.apiBaseUrl+`/Sites`
@@ -78,9 +177,15 @@ export class MaplocationService {
       environment.apiBaseUrl+`/Levels`
     )
   }
+  
   getAllSpaces(){
     return this.http.get(
       environment.apiBaseUrl+`/Spaces`
+    )
+  }
+  getAllSpacesByLevelId(levelId:any){
+    return this.http.get(
+      environment.apiBaseUrl+`/Spaces/byId/${levelId}`
     )
   }
   setFacilitylocation(data:any){

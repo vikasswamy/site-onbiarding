@@ -1,19 +1,89 @@
 <div class="wrapper">
     
-            <app-left-side-menu (dataEvent)="receiveDataFromChild($event)" [clicked]="isClicked"></app-left-side-menu>
+            <app-left-side-menu (typeofFile)="getFileType($event)" (drawEvent)="createStructure($event)" (dataEvent)="receiveDataFromChild($event)" [clicked]="isClicked"  [isedit]="editing" [isview]="viewing" [isnew]="NewLevel" ></app-left-side-menu>
      
       
     <div class="main-container">
-        
+<!--         
             <mat-icon style="position: absolute; top: 50%; border: none;border-color:transparent;  color: #fff;" (click)="toggleMenu()" > 
                 
                 {{ isClicked ? "keyboard_arrow_right" : "keyboard_arrow_left" }}
         
-        </mat-icon>
-       
+        </mat-icon> -->
+        <div *ngIf="isAllLevels" class="container-wrapper">
+          <div class="container"   >
+            <div #screen  class="card-container" id="container" [style.grid-template-columns]="No_of_columns">
+              <div class="card">
+                  <div class="card-body" style="  width: 100%;
+                  justify-content: center;
+                  padding: auto;
+                  height: 100%;overflow: hidden;
+                  background-color: transparent;
+                  position: relative;">
+                   
+              
+                          <div class="icon" (click)="addNew()"> <svg width="100" height="100" style="cursor: pointer;" class="bi bi-plus" viewBox="0 0 16 16">
+                              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
+                                  <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"/>
+                                </svg>
+                          </svg>
+                          <p>Add Level </p>
+                     
+                       
+                      </div>
+                 
+                  </div>
+              </div>
+            <div *ngFor="let card of AllLevelsData;let i = index" class="card">
+              
+              <div class="card-body" [attr.id]="card.levelId" style="  width: 100%;
+                  height: 100%;overflow: hidden;
+                  background-color: transparent;
+                  position: relative;">
+                  <div class="imagecontainer">
+                    <img [src]="card.FloorPlanImageUrl" alt="" />
+                    <p class="title">{{card.levelName}}</p>
+                    <div class="overlay"></div>
+                    <div class="button">
+                      
+                      <button class="content-button status-button open" (click)="viewLevel(card)"> view </button>
+                      <button class="content-button status-button" (click)="editLevel(card)"> Edit </button>
+                      <button class="dange-button " (click)="deleteLevel(card)"> Delete </button>
+                    </div>
+                  </div>
+              </div>
+              
+              <!-- <div class="card-footer text-light   d-flex justify-content-between color">
+                  <h5>Time: {{timeValue}} </h5> <h5>Occupancy: {{card.Occupancy}} </h5>
+              </div> -->
+            </div>
+  
+          </div>
+          </div>
+          
+
+        </div>
         
-        <div class="content-wrapper">     
-                    <div class="container-fluid " >
+        
+        <div *ngIf="!isAllLevels" class="content-wrapper" > 
+          <div class="d-flex justify-content-between mb-2 align-items-center">
+            <div class="content-section-title d-flex">
+              {{editing? 'Add or Update or Delete Spaces for the Floor': viewing? 'View Floor click back to All Floors': NewLevel ? 'Upload Floor plans and create Spaces':''}}
+              
+             </div>
+             <button *ngIf="viewing" mat-fab extended (click)="backtoAllFloors()" >
+              <mat-icon>dashboard</mat-icon>
+              Back to All Floors
+            </button>
+              <div class="tool-bar" *ngIf="showToolbar">
+                <mat-icon (click)="endEdit()"> check_circle_outline</mat-icon>
+                <mat-icon  (click)="deleteGeometry()"> delete_outline</mat-icon>
+              </div>
+            <button class="content-button status-button" *ngIf="enablecreateLevel && !viewing" (click)="toggleRightSideBar()" >
+              {{isbuttonClikced ? 'Back':'Next '}}
+            </button>
+          </div>    
+                    <div [ngClass]=" viewing ? 'container-fluid' : 'container'" >
                         <div class="row glass-row">
                             <div class="col-lg-12 col-md-6 col-sm-12">
                                 <div class="card glass-card">
@@ -21,9 +91,9 @@
                                     <div class="card-body" style=" width: 100%;
                                      height: calc(35rem)">
                                       
-                                      <div id="level-map" ></div>
+                                      <div #levelMap id="level-map" ></div>
                                       <div class="pane">
-                                      <button mat-fab color="primary" aria-label="normal button" (click)="startEdit()">
+                                      <!-- <button mat-fab color="primary" aria-label="normal button" (click)="startEdit()">
                                         <mat-icon  matTooltip="Start Edit">edit</mat-icon>
                                       </button>
                                       <button mat-fab color="primary" aria-label="normal button" (click)="endEdit()">
@@ -31,17 +101,66 @@
                                       </button>
                                       <button mat-fab color="primary" aria-label="normal button" (click)="rotateMarker()">
                                         <mat-icon  matTooltip="Done">crop_rotate</mat-icon>
-                                      </button>
+                                      </button> -->
                                     </div>
                                     </div>
                              
                                   </div>
                             </div>
                         </div>
+                        
                     </div>
-                
+                    
             </div> 
             
+           
     </div>
-  
+
+    <mat-sidenav #sidenav mode="push" position="end" class="example-sidenav" >
+      <form (ngSubmit)="onSubmit(LevelAndSpaceform)" #LevelAndSpaceform="ngForm">
+        <div class="form-group">
+            <label for="Levelname" class="side-title">Level Name</label>
+            <input
+              type="text"
+              class="form-control"
+              placeholder="Level Name"
+              name="Levelname"
+              #Levelname="ngModel"
+              (keydown)="onChangeValue($event)"
+              [class.is-valid]="(Levelname.dirty || Levelname.touched || !levelAlreadyExist)"
+              [class.is-invalid]="Levelname.invalid && (Levelname.dirty || Levelname.touched || !levelAlreadyExist)"
+              [(ngModel)]="form.levelName"
+              required
+            />
+            <div class="form-control-feedback" *ngIf="Levelname.errors && (Levelname.dirty || Levelname.touched || !levelAlreadyExist)">
+              <p *ngIf="Levelname.errors && !levelAlreadyExist">Level Name is required</p>
+              <p *ngIf="levelAlreadyExist">Level Already Exist</p>
+            </div>
+          </div>
+          <div class="side-title">Total Spaces </div>
+         
+          
+            <div *ngFor="let Spaces of form.SpacesList,let i = index">
+              <div class="form-group">
+                <input
+                type="text"
+                class="form-control"
+                placeholder="Space Name"
+                name="SpaceNames"
+                [(value)]="form.SpacesList[i].spaceName"
+                disabled="true"
+              />
+             
+            </div>
+            </div>
+          
+          
+          <div class="btn-group d-flex" id="btn-group">
+            <button class="content-button status-button open" mat-dialog-close>Cancel</button>
+            <button [disabled]="!LevelAndSpaceform.valid" class="content-button status-button" type="submit">{{editing?'Update Level':'Submit'}}</button>
+          </div>       
+    </form> 
+    </mat-sidenav> 
+     
+    
 </div>

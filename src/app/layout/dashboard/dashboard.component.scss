@@ -1,3 +1,23 @@
+.filter {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 5px;
+}
+
+.filter-btn {
+
+
+  height: 30px;
+  margin: 8px;
+  // background-color: rgba(55, 54, 54, 0.448);
+  width: 200px;
+  padding: 5px 10px;
+  border-radius: 5px;
+  border: none;
+  // color: aliceblue;
+  border: none;
+}
+
 .basic-container {
     padding: 64px 64px 400px 64px;
   }
@@ -6,3 +26,147 @@
     float: right;
     padding: 8px;
   }
+  .table-details {
+    width: 100%;
+    // min-width: 500px;
+    // background-color: rgba(86, 86, 86, 0.396);
+    margin-left: 10px;
+    border-radius: 5px;
+    // height: 80vh;
+    height: 77vh;
+    box-shadow: none;
+    overflow-y: hidden;
+  }
+  .table-div {
+    display: flex;
+    width: 100%;
+    // height: 600px;
+    height: fit-content;
+    overflow-y: auto;
+    border: none;
+  }
+  td.mat-cell {
+    border-bottom: none;
+    border-top: none;
+    background: none;
+  }
+  
+
+
+  /* carausel cards css**/
+
+  .w-100 {
+    width: 100%!important;
+  }
+  
+  .Crl-container {
+    display: flex;
+    position: relative;
+    justify-content: center;
+  }
+  
+  .Crl-cards {
+    width: calc(100% - 80px);
+    overflow: hidden;
+  }
+  
+  .Crl-overflow {
+    position: relative;
+    transition: left 0.5s ease-in-out;
+  }
+  
+  // .Crl-card {
+  //   height: 300px;
+  //   background-color: #e0e1e2;
+  //   border-radius: 5px;
+  //   display: inline-block;
+  //   margin-right: 10px;
+  //   position: relative;
+  // }
+  .card-image img {
+    width: 100%;
+    height: 100%;
+    border-bottom-left-radius: 20px;
+    border-top-right-radius: 20px;
+    box-shadow: 0 2px 3px rgba(0, 0, 0, 0.5);
+  }
+  
+  
+  
+  .Crl-card .card-title {
+    font-size: 1.8rem;
+    font-weight: bold;
+    margin-top: 0.5rem;
+  }
+  
+  .Crl-card .card-subtitle {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    margin-bottom: 5px;
+  }
+  
+  .Crl-card .social-links a {
+    color: white;
+    text-decoration: none;
+    padding: 0.5rem;
+  }
+  
+  .Crl-card .social-links #icon {
+    width: 1.2rem;
+    transition: transform 0.3s ease-in-out;
+  }
+  
+  .social-links #icon:hover {
+    transform: translatey(-5px);
+  }
+  
+  .card .learn-btn button {
+    background: var(--btn-color);
+    padding: 0.7rem 2.5rem;
+    font-size: 15px;
+    color: var(--text-primary);
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    font-weight: 600;
+    letter-spacing: 1px;
+    margin-top: 0.2rem;
+  }
+  .no-right-margin {
+    margin-right: 0px;
+  }
+  
+  .Crl-card span {
+    font-size:48px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+  
+  .left,
+  .right {
+    height: 30px;
+    width: 30px;
+    background-color: #0072bc;
+    border-radius: 25px;
+    position: absolute;
+    top: 50%;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    transform: translateY(-50%);
+  }
+  
+  .left.disabled, .right.disabled {
+    background-color:#CCC;
+  }
+  
+  .left {
+    left: 0;
+  }
+  
+  .right {
+    right: 0;
+  }
+  

@@ -1,3 +1,176 @@
+/* image hover css*/
+.imagecontainer {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  align-items: center;
+}
+#card-header {
+  display: inline-block;
+  white-space: nowrap;
+  overflow: hidden;
+  background-color: #1e1e1e;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  align-items: center;
+  background: rgba(0, 0, 0, 0);
+  transition: background 0.5s ease;
+}
+
+.imagecontainer:hover .overlay {
+  display: block;
+  background: rgba(0, 0, 0, .3);
+}
+
+img {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  opacity: 60%;
+}
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  align-items: center;
+  background: rgba(0, 0, 0, 0);
+  transition: background 0.5s ease;
+}
+.title {
+  position: absolute;
+  width: 200px;
+  left: 10%;
+  top: 40%;
+  font-weight: 700;
+  font-size: 20px; /* Default size */
+  line-height: auto; /* Default line height */
+  word-wrap: normal;
+  text-align: center;
+  text-transform: uppercase;
+  color: rgba(14, 14, 14, 0.9);
+  z-index: 1;
+  transition: top .5s ease;
+}
+
+.imagecontainer:hover .title {
+  top: 10%;
+}
+
+.button {
+  position: absolute;
+  width:auto;
+  left: 10%;
+  top: 40%;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  opacity: 0;
+  transition: opacity .35s ease;
+}
+
+.button button {
+  width: 200px;
+  padding: auto;
+  font-size: 14px;
+  margin: 5px;
+  text-align: center;
+  color: white;
+  border: solid 1px rgba(255, 255, 255, 0.41);
+  z-index: 1;
+}
+
+.imagecontainer:hover .button {
+  opacity: 1;
+}
+
+/**/
+
+
+.card-container {
+  //border: 1px solid;
+  display: inline-grid;
+  //grid-template-columns: 1fr 1fr 1fr;
+  /* 2 columns */
+  grid-auto-rows: 1fr;
+  /* equal rows */
+  vertical-align: top;
+  padding: 0%;
+  margin-top: 4%;
+  width: 1080px;
+  min-height: 450px;
+  max-height: 500px;
+  overflow-y: auto;
+}
+
+.card-container>* {
+     border: 1px solid gray;
+   background-color: transparent;
+  margin: 5px;
+  min-height:5rem;
+  max-height: 15rem;
+}
+
+.card-container>*:nth-child(odd):last-child {
+  grid-column: span 1;
+  /* take 2 columns */
+}
+.icon{
+  max-width: 30em;
+  min-width: 18em;
+  height: 100%;
+  padding: 50px;
+
+  text-align: center;
+  align-items: center;
+  justify-content:center ;
+}
+#card-header {
+  display: inline-block;
+  white-space: nowrap;
+  overflow: hidden;
+  background-color: #1e1e1e;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+
+
+.example-sidenav {
+  width: auto;
+  padding: 20px;
+  background-color: transparent;
+
+}
+.tool-bar{
+  display: flex;
+  cursor: pointer;
+  justify-content: space-around;
+  padding: 5px;
+  flex-direction: row;
+  border-radius: 50px;
+  width: 100px;
+  background-color:  rgba(146, 151, 179, 0.93);
+}
+.spaceNames{
+  display: flex;
+  cursor: pointer;
+  justify-content: space-around;
+  padding: 5px;
+  flex-direction: row;
+  border-radius: 50px;
+  width: 100px;
+  background-color:  rgba(146, 151, 179, 0.93);
+}
 #level-map{
     width: 100%;
  height: 100%;
@@ -7,6 +180,31 @@
  border-radius: 5px;
  right: 0;
  }
+ .menu-button{
+    position: fixed;
+    bottom: 1.5rem;
+    right: 1.5rem;
+  }
+  
+  .menu-button {
+    background-color: rgba(146, 151, 179, 0.93); /* Adjust opacity here */
+    border: none; /* Remove border */
+    transition: all 0.3s ease;
+    align-items: center;
+    padding: 0;
+    justify-content: center;
+    min-width: 250px;
+    max-width: 300px;
+    max-height: 500px;
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+  
+  .menu-button:hover {
+   // background-color: rgba(16 18 27 / 40%); /* Adjust hover opacity */
+    transform: translateY(-5px); /* Optional: Add a slight lift on hover */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Optional: Add a subtle shadow */
+  }
  .pane {
     background: none;
     line-height: 28px;

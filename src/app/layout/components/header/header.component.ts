@@ -12,7 +12,9 @@ export class HeaderComponent implements OnInit {
     constructor(private translate: TranslateService, public router: Router) {
        
     }
-
+    backtoHome(){
+        this.router.navigate(['/dashboard']);
+    }
     ngOnInit() {
     }
 

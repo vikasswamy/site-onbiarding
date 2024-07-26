@@ -1,0 +1,36 @@
+<div class="backdrop">
+    <mat-card class="openAlertStyles" style="width: 320px;">
+      <div class="d-flex" style="align-items: center; padding-bottom: 10px;padding-left: 15px;">
+        <span class="header-card-text" style="min-width: 180px;"> Rename the Space Name </span>
+        <button mat-icon-button (click)="dialogclose()" style="right:3px;top:3px;position: absolute; border: none;">
+          <mat-icon>close</mat-icon></button>
+      </div>
+      <hr style="border: 1px solid white !important; opacity:1;margin-top: 0px; width: 92%;margin-left:5px;">
+      <div class="scroll-cont"
+        style="margin-right: 5px; margin-left: 5px; background-color: linear-gradient(to right, #5f6063, #5b5c5f);">
+        <form (ngSubmit)="onSubmit(Spaceform)" #Spaceform="ngForm">
+            <div class="form-group">
+                <label for="userName">Space Name</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="Space Name"
+                  name="Spacename"
+                  #Spacename="ngModel"
+                  [class.is-valid]="(Spacename.dirty || Spacename.touched)"
+                  [class.is-invalid]="Spacename.invalid && (Spacename.dirty || Spacename.touched)"
+                  [(ngModel)]="form.spaceName"
+                  required
+                />
+                <div class="form-control-feedback" *ngIf="Spacename.errors && (Spacename.dirty || Spacename.touched)">
+                  <p *ngIf="Spacename.errors">Space Name is required</p>
+                </div>
+              </div>
+              <div class="btn-group d-flex" id="btn-group">
+                <button class="content-button status-button" type="submit">Proceed</button>
+              </div>       
+        </form> 
+      </div>
+    </mat-card>
+   
+  </div>

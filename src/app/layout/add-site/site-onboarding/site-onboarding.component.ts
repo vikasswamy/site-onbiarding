@@ -93,7 +93,7 @@ export class SiteOnboardingComponent  implements OnInit,AfterViewInit  {
     }
     else if(this.file && this.file !='ignore'){
       const formData = new FormData();
-      formData.append('file', this.file.file);
+      formData.append('file', this.file);
         console.log(this.file.name,"Filename");
       this.fileName = this.file.name;
       this.fileType =this.file.name.split(".")[1];

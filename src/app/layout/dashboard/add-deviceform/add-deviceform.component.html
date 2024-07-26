@@ -1,0 +1,76 @@
+<div class="backdrop">
+    <mat-card class="openAlertStyles" style="width: 320px;">
+      <div class="d-flex" style="align-items: center; padding-bottom: 10px;padding-left: 15px;">
+        <span class="header-card-text" style="min-width: 180px;"> Please provide Device Details </span>
+        <button mat-icon-button (click)="dialogclose()" style="right:3px;top:3px;position: absolute; border: none;">
+          <mat-icon>close</mat-icon></button>
+      </div>
+      <hr style="border: 1px solid white !important; opacity:1;margin-top: 0px; width: 92%;margin-left:5px;">
+      <div class="scroll-cont"
+        style="margin-right: 5px; margin-left: 5px; background-color: linear-gradient(to right, #5f6063, #5b5c5f);">
+        <form (ngSubmit)="onSubmit(deviceForm)" #deviceForm="ngForm">
+            <div class="form-group">
+                <label for="userName">Device Type</label>
+               <select
+                  class="form-control"
+                  name="Devices"
+                  #Devices="ngModel"
+                  placeholder="Please Select A Device Type "
+                  [(ngModel)]="form.deviceTypeId"
+                  [class.is-valid]="(Devices.dirty || Devices.touched)"
+                  [class.is-invalid]="Devices.invalid && (Devices.dirty || Devices.touched)"
+                  required
+                  (change)="onOptionsSelected(Devices.value)"
+                >
+                  <option *ngFor="let d of DefauultDeviceType" [value]="d.deviceTypeId">{{ d.deviceType }}</option>
+                </select>
+               
+                <div class="form-control-feedback" *ngIf="Devices.errors && (Devices.dirty || Devices.touched)">
+                  <p *ngIf="Devices.errors">Devices should be selected</p>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="userName">Device Source Id</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  placeholder="Device Source Id"
+                  name="DeviceId"
+                  #DeviceId="ngModel"
+                  [class.is-valid]="(DeviceId.dirty || DeviceId.touched)"
+                  [class.is-invalid]="DeviceId.invalid && (DeviceId.dirty || DeviceId.touched)"
+                  [(ngModel)]="form.deviecSourceId"
+                  required
+                />
+                <div class="form-control-feedback" *ngIf="DeviceId.errors && (DeviceId.dirty || DeviceId.touched)">
+                  <p *ngIf="DeviceId.errors">DeviceId is required</p>
+                </div>
+              </div>
+              <div class="group-gap">
+                <h5 class="mb-3">Device Model</h5>
+                <div class="d-block my-3">
+
+                    <div class="custom-control custom-radio">
+                        <input id="male" type="radio" class="custom-control-input" value="Basic" name="gender"  #Basic="ngModel" (change)="handleChange(Basic.value)" [(ngModel)]="form.deviceModel" required>
+          <label class="custom-control-label" for="male">Basic</label>
+        </div>
+
+        <div class="custom-control custom-radio">
+          <input id="female" type="radio" class="custom-control-input" value="Advance" name="gender" #Advance="ngModel" (change)="handleChange(Advance.value)"  [(ngModel)]="form.deviceModel" required>
+          <label class="custom-control-label" for="female">Advance</label>
+        </div>
+
+        <div class="invalid-feedback" *ngIf="deviceForm.invalid">
+          <p>Please select either value</p>
+        </div>
+      </div>
+    </div>
+              <div class="btn-group d-flex" id="btn-group">
+                <button class="content-button status-button open" mat-dialog-close>Cancel</button>
+                <button [disabled]="!deviceForm.valid"class="content-button status-button" type="submit">Proceed</button>
+              </div>       
+        </form> 
+      </div>
+    </mat-card>
+   
+  </div>

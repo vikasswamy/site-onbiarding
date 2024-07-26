@@ -12,8 +12,7 @@
     width: 44px;
     display: none;
   }
-
-
+ 
   .counter {
     background-color:rgb(146 151 179 / 13%);
     margin: 10px 5px;
@@ -60,10 +59,7 @@
     width: auto;
     transition: .40s;
   }
-  .darSideBar{
-    width: 0px;
-    transition: .40s;
-  }
+ 
   @media screen and (max-width: 100px) {
     .content{
         display: none;
@@ -75,6 +71,22 @@
       display: none;
     }
   }
+  .counter img {
+    display: block;
+    width: auto;
+    height : auto;
+    height: 85px;
+    width: 60px;
+    border-radius: 5px;
+  }
+  .menuBreak
+    {
+        width: 210px;
+        height: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
    .upload-container {
             display: flex;
             flex-direction: column;
@@ -98,18 +110,7 @@
     font-size: 14px;
     
   }
-  .navIcon{
-    display: inline-flex;
-    justify-content: center;
-    align-items: center;
-    width: 26px;
-    height: 26px;
-    font-weight: bold;
-    background-color: #ffbb00;
-    color: #fff;
-    margin-right: 6px;
-    border-radius: 4px;
-  }
+ 
   
   .userFotoGenis{
     width: 60px;

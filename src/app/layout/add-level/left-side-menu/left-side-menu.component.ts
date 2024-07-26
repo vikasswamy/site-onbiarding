@@ -15,8 +15,14 @@ export class LeftSideMenuComponent implements OnInit {
   @ViewChild('pdfInput') pdfInput!: ElementRef;  pdfToUpload: File;
   showMyContainer: boolean = false;
   @Input() clicked:boolean;
+  @Input() isedit:boolean;
+  @Input() isview:boolean;
+  @Input() isnew:boolean;
+  isImageSelected:boolean=false;
    isfileChoosen:boolean;
    @Output() dataEvent = new EventEmitter<string>();
+   @Output() drawEvent = new EventEmitter<string>();
+   @Output() typeofFile = new EventEmitter<string>();
   status: boolean = false;
   statusLink: boolean = false;
   File: any;
@@ -42,11 +48,11 @@ export class LeftSideMenuComponent implements OnInit {
     dialogRef.afterClosed().subscribe((dialogData:any) => {
       console.log(dialogData);
       this.File=dialogData.data;
-     
+      this.File?this.isImageSelected=true:this.isImageSelected=false;
 
     })
   }
-
+  
   openFileInput(): void {
     this.jpgInput.nativeElement.click();
   }
@@ -64,7 +70,7 @@ export class LeftSideMenuComponent implements OnInit {
       console.log('Selected file:', file);
       this.fileName = fileInput.files[0].name
     this.fileType = fileInput.files[0].name.split(".")[1];
-    console.log(this.fileType,'file type:::');
+    this.typeofFile.emit(this.fileName);
     let reader = new FileReader();
    reader.readAsDataURL(fileInput.files[0])
     reader.addEventListener(
@@ -91,6 +97,7 @@ export class LeftSideMenuComponent implements OnInit {
     reader.addEventListener(
       'load',
       () => {
+        
         this.sendDataToParent(reader.result)
         
       });
@@ -99,6 +106,11 @@ export class LeftSideMenuComponent implements OnInit {
     })
   }
   sendDataToParent(data:any) {
-    this.dataEvent.emit(data); // Emitting the data to the parent component
+    
+    this.dataEvent.emit(data);
+    this.isImageSelected=true; // Emitting the data to the parent component
+  }
+  createGeometry(name:any){
+    this.isImageSelected || this.isedit ?this.drawEvent.emit(name):alert('please Import Floor Plan')
   }
 }

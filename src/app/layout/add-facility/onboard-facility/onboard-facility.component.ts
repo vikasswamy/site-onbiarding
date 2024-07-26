@@ -4,7 +4,7 @@ import { MaplocationService } from 'src/app/services/maplocation.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import * as maptalks from "maptalks";
 import { fromEvent, Subscription } from 'rxjs';
-import { distinctUntilChanged, filter, startWith } from "rxjs/operators";
+import { distinctUntilChanged, filter, startWith } from "rxjs/operators"; 
 import { environment } from 'src/environments/environment';
 import { FilesService } from '../../files.service';
 import { FacilityServiceService } from '../facility-service.service';
@@ -45,8 +45,14 @@ export class OnboardFacilityComponent implements OnInit, AfterViewInit {
     private routers:Router,private blobService:FilesService,private facilityService:FacilityServiceService,private snackbar:MatSnackBar
   ){
     this.router.queryParams.subscribe((params:any) => {
+      if(Object.entries(params).length>0){
+        
       console.log(params,":::Params:::");
       this.obtainedSiteName=params.siteName;
+      }
+      else{
+        this.routers.navigate(["/dashboard"]);
+      }
     })
   }
 ngAfterViewInit(): void {
@@ -170,7 +176,7 @@ ngAfterViewInit(): void {
     }
     else if(this.file && this.file !='ignore'){
       const formData = new FormData();
-      formData.append('file', this.file.file);
+      formData.append('file', this.file);
         console.log(this.file.name,"Filename");
       this.fileName = this.file.name;
       this.fileType =this.file.name.split(".")[1];
@@ -248,8 +254,10 @@ ngAfterViewInit(): void {
       data:'image/jpeg, image/png'
     });
     dialogRef.afterClosed().subscribe((dialogData:any) => {
-      console.log(dialogData);
-      let reader = new FileReader();
+     if(dialogData.data){
+      
+      this.file= dialogData.data;
+     }
       
     })
   }

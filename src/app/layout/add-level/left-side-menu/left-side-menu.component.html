@@ -1,8 +1,8 @@
 
-    <div  [ngClass]="clicked ? 'darSideBar' : 'left-side'">
+    <div *ngIf="!isview"  [ngClass]="clicked ? 'darSideBar' : 'left-side'">
         
             <div *ngIf="!clicked" class="content">
-                <div  class="side-wrapper">
+                <div *ngIf="!isedit"  class="side-wrapper">
                     <div class="side-title">Upload Floor Plan</div>
                     <div class="side-menu">
                             <!-- <file-pond #myPond 
@@ -13,11 +13,11 @@
                             (onactivatefile)="pondHandleActivateFile($event)">
                         </file-pond>
                  -->
-                 <div class="container">
+                 <div  class="container">
                   
                         <div class="row text-center">
                             <div class="col-xs-4">
-                            <div class="counter" (click)="openFileInput()" >
+                            <div class="counter"  (click)="openFileInput()" >
                             <input #jpgInput type="file" name="file" class="custom-input-image" (change)="onFileSelected($event)"  accept=".jpg,.img"> 
                            
                                 <mat-icon class="fa fa-code fa-2x">image</mat-icon>
@@ -47,11 +47,97 @@
                  
                     </div>
                 </div>  
+                <div class="menuBreak">
+                    <hr>
+                  </div>
                 <div class="side-wrapper">
                     
-                    <div class="side-title">Draw Shapes</div>
+                    <div class="side-title">Draw Walls And Structures</div>
                     <div class="side-menu">
-                        Shape containers comes Here
+                       
+                        <div class="container">
+                  
+                            <div class="row text-center">
+                                <div class="col-xs-4">
+                                <div class="counter"  (click)="createGeometry('floor')" >
+                                    <img  src="../../../../assets/FloorPlan Icons/Draw_outline.png" alt="">
+                        </div>
+                                </div>
+                                  <div class="col-xs-4">
+                                   <div class="counter" (click)="createGeometry('wall')" >
+                                    <img  src="../../../../assets/FloorPlan Icons/wall.png" alt="">
+                        </div>
+                                  </div>
+                                  
+                                  <div class="col-xs-4">
+                                  <div class="counter" (click)="createGeometry('room')">
+                                    <img  src="../../../../assets/FloorPlan Icons/Room.png" alt="">
+                        </div>
+                                  </div>
+                             </div>
+                             
+                    </div>
+                    </div>
+                    <div class="side-title">Draw Windows And Doors</div>
+                    <div class="container">
+                             <div class="row text-center">
+                                <div class="col-xs-4">
+                                <div class="counter"  >
+                                    <img  src="../../../../assets/FloorPlan Icons/Flip Window.png" alt="">
+                        </div>
+                                </div>
+                                  <div class="col-xs-4">
+                                   <div class="counter"  >
+                                    <img  src="../../../../assets/FloorPlan Icons/L Window.png" alt="">
+                        </div>
+                                  </div>
+                                  
+                                  <div class="col-xs-4">
+                                  <div class="counter" >
+                                    <img  src="../../../../assets/FloorPlan Icons/U Window.png" alt="">
+                        </div>
+                                  </div>
+                             </div>
+                             <div class="row text-center">
+                                <div class="col-xs-4">
+                                <div class="counter"  >
+                                    <img  src="../../../../assets/FloorPlan Icons/Single Door.png" alt="">
+                        </div>
+                                </div>
+                                  <div class="col-xs-4">
+                                   <div class="counter"  >
+                                    <img  src="../../../../assets/FloorPlan Icons/Double Door.png" alt="">
+                        </div>
+                                  </div>
+                                  
+                                  <div class="col-xs-4">
+                                  <div class="counter" >
+                                    <img  src="../../../../assets/FloorPlan Icons/Single Door.png" alt="">
+                        </div>
+                                  </div>
+                             </div>
+                             
+                    </div>
+                    <div class="side-title">Draw Bheems and Columns</div>
+                    <div class="container">
+                        <div class="row text-center">
+                            <div class="col-xs-4">
+                            <div class="counter"  >
+                                <img  src="../../../../assets/FloorPlan Icons/Beam.png" alt="">
+                    </div>
+                            </div>
+                              <div class="col-xs-4">
+                               <div class="counter"  >
+                                <img  src="../../../../assets/FloorPlan Icons/Column Cyl.png" alt="">
+                    </div>
+                              </div>
+                              
+                              <div class="col-xs-4">
+                              <div class="counter" >
+                                <img  src="../../../../assets/FloorPlan Icons/Column.png" alt="">
+                    </div>
+                              </div>
+                         </div>
                     </div>
                 </div>
             </div>
