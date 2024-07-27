@@ -11,12 +11,13 @@ import { PdfViewerModule } from 'ng2-pdf-viewer';
 import { AppMaterialModule } from 'src/app/material.module';
 import { AddSpaceComponent } from './add-space/add-space.component';
 import { EditMarkerTextComponent } from './edit-marker-text/edit-marker-text.component';
+import { DeleteDialogComponent } from './delete-dialog/delete-dialog.component';
 //import { ImageCropperModule } from 'ngx-image-cropper';
 
 @NgModule({
   declarations: [
     OnBoardLevelComponent,
-    LeftSideMenuComponent,ImagePreviewComponent, AddSpaceComponent, EditMarkerTextComponent
+    LeftSideMenuComponent,ImagePreviewComponent, AddSpaceComponent, EditMarkerTextComponent, DeleteDialogComponent
   ],
   imports: [
     CommonModule,

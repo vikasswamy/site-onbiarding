@@ -58,7 +58,7 @@ export class DashboardComponent implements OnInit {
         {
         parentName:'',
         parentId:'',
-          displayName: 'select Level',
+          displayName: 'select Facility >> Level',
           id:'',
           geometry:{},
           children: [

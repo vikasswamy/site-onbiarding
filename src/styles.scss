@@ -170,7 +170,7 @@ body.light-mode .video-bg:before {
 //   max-height:900px;
   height: 95vh;
   display: flex;
-  
+  margin-top: 20px;
   flex-direction: column;
   overflow: hidden;
   position: relative;
@@ -1032,7 +1032,7 @@ body.light-mode .video-bg:before {
   width: calc(100% + 20px);
 }
 .Crl-card {
-  height: 300px;
+  height: 250px;
   font-size: 16px;
   background-color: var(--content-bg);
   border-radius: 14px;

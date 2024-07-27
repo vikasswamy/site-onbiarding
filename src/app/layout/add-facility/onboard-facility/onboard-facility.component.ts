@@ -47,7 +47,7 @@ export class OnboardFacilityComponent implements OnInit, AfterViewInit {
     this.router.queryParams.subscribe((params:any) => {
       if(Object.entries(params).length>0){
         
-      console.log(params,":::Params:::");
+     // console.log(params,":::Params:::");
       this.obtainedSiteName=params.siteName;
       }
       else{

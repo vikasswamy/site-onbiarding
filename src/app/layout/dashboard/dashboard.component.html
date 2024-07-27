@@ -71,9 +71,24 @@
           </span>
           <div class="app-card__subtext">Onboard devices for lavel and spaces</div>
           <div class="app-card-buttons">
-           <button class="content-button status-button">get Started</button>
-          
-          </div>
+            <span *ngFor="let item of navItems">
+              <!-- Handle branch node buttons here -->
+              <span  *ngIf="item.children && item.children.length > 0">
+                <button  class="content-button status-button" [matMenuTriggerFor]="menu.childMenu">
+                  {{item.displayName}}
+                </button>
+                <app-device-menu  #menu [items]="item.children"></app-device-menu>
+              </span>
+              <!-- Leaf node buttons here -->
+              <span *ngIf="!item.children || item.children.length === 0">
+                <button mat-button color="primary" >
+                  {{item.displayName}}
+                </button>
+              </span>
+            </span>
+            <!-- <button class="content-button status-button">get Started</button>
+            <div class="menu"></div> -->
+           </div>
          </div>
        </div>
       
@@ -186,7 +201,15 @@
       </div>
      </div> -->
      <div class="content-section">
-      
+      <div class="content-section-title">
+        <div class="filter">
+          <div class="optimize_btn">
+            <h4>All Sites Details </h4>
+          </div>
+          
+    
+        </div>
+      </div>
       <div class="Crl-container" #container>
         <mat-icon class="left" *ngIf="totalPages > 1" (click)="currentPage != 1 && changePage(-1)" [ngClass]="{'disabled':currentPage === 1}" > keyboard_arrow_left</mat-icon>
         <div class="Crl-cards" [ngClass]="{'w-100': totalPages === 1}">
@@ -194,27 +217,19 @@
             <div class="Crl-card" *ngFor="let i of arr; let index = index" [ngStyle]="{'width': cardWidth}">
               
                 <div class="card-image">
-                  <img src="https://images.pexels.com/photos/91227/pexels-photo-91227.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500" alt="user image">
+                  <img [src]='i.fileUrl'>
                 </div>
                 <div class="card-title">
-                  <p>John Smith</p>
+                  <p>{{i.siteName}}</p>
                 </div>
                 <div class="card-subtitle">
-                  <p>&#x3c;Frontend Developer &#x2215;&#62;</p>
+                  <p>Total Facilities : {{i.total_Facilities}}
+                    </p>
                 </div>
-                <div class="social-links">
-                  <a href="#">
-                    <i data-feather="twitter" id="icon"></i>
-                  </a>
-                  <a href="#">
-                    <i data-feather="instagram" id="icon"></i>
-                  </a>
-                  <a href="#">
-                    <i data-feather="github" id="icon"></i>
-                  </a>
-                </div>
+                
                 <div class="learn-btn">
-                  <button type="button">Know more</button>
+                  <button class="content-button status-button" type="button">Know more</button>
+                  
                 </div>
               
             </div>
