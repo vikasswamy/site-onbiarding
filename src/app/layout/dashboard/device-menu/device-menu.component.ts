@@ -16,8 +16,8 @@ export class DeviceMenuComponent {
     
   }
   gotToAddLevel(data:any){
-    console.log(data,'::::router data::::');
     this.routre.navigate(["/map-devices"],
-      { queryParams: {"siteName":data.parentName,"siteId":data.parentId,"facilityname":data.displayName,"facilityId": data.id} });
+      { queryParams: {"siteName":data.parentName,"siteId":data.parentId,"facilityname":data.displayName,"facilityId": data.id, 
+      "layout":JSON.stringify(data.geometry)} });
   }
 }

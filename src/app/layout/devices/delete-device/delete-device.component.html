@@ -1,0 +1,17 @@
+<div class="backdrop">
+    <mat-card class="openAlertStyles" style="width: 320px;">
+      <div class="d-flex" style="align-items: center; padding-bottom: 10px;padding-left: 15px;">
+        <span class="header-card-text" style="min-width: 180px;">Are Your Sure, "Want to delete?" </span>
+        
+      </div>
+      <hr style="border: 1px solid white !important; opacity:1;margin-top: 0px; width: 92%;margin-left:5px;">
+     
+    </mat-card>
+    <mat-dialog-actions align="end">
+        
+        <div class="btn-group d-flex" id="btn-group">
+          <button class="content-button status-button open" (click)="cancel()">Cancel</button>
+          <button class="content-button status-button" (click)="Yes()">Yes</button>
+        </div>
+      </mat-dialog-actions>
+  </div>

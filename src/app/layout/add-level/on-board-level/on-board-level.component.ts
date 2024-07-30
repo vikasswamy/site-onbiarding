@@ -731,13 +731,13 @@ export class OnBoardLevelComponent implements OnInit, AfterViewInit {
   createFilledpolygons(geojsonFile: any) {
     var coordinates: any;
     this.sampleGeojson.features = [];
-    // Iterate through each feature in geojsonData
     this.http.get(String(geojsonFile)).subscribe((response: any) => {
       response.features.forEach((item: any, i: any) => {
         if (item.properties.SpaceName !== 'wall' && item.properties.SpaceName !== 'floor') {
-          let derivedspaceId = this.spacesData.find((obj: any) => obj.Level_Id == this.selectedLevelData.levelId && obj.spaceName == item.properties.SpaceName);
-          item.properties.SpaceId = derivedspaceId.spaceId
-          item.properties.SpaceName = derivedspaceId.spaceName
+          let derivedspaceId:any = this.spacesData.find((obj: any) => obj.Level_Id == this.selectedLevelData.levelId && obj.spaceName == item.properties.SpaceName);
+          console.log(derivedspaceId,"::::derivedSpaceId:::::");
+          item.properties.SpaceId = derivedspaceId.spaceId;
+          item.properties.SpaceName = derivedspaceId.spaceName;
         }
 
         this.sampleGeojson.features.push(item);

@@ -1,1 +1,231 @@
-<p>map-devices works!</p>
+
+
+ <div class="wrapper">
+      <div class="main-container">
+        <div  class="content-wrapper" > 
+          <div class="d-flex justify-content-between mb-2 align-items-center">
+            <div class="content-section-title d-flex">
+              Drag and Drop Devices 
+              
+            </div>
+                             <select
+                             *ngIf="MapActive"
+                               id="drvice-level-select"
+                                style="width: 20%;"
+                                class="form-control"
+                                name="Level"
+                                placeholde="Select Level"
+                                #Level="ngModel"
+                                [(ngModel)]="selectedLevel"
+                                (change)='onOptionsSelected(Level.value)'
+                              >
+                                <option value="">Please Select Level</option>
+                                <option *ngFor="let l of levlesData" [value]="l.levelId">{{ l.levelName }}</option>
+                              </select>
+                              <div class="tool-bar" *ngIf="showToolbar">
+                                <mat-icon  (click)="unmappDEvice()"> delete_outline</mat-icon>
+                              </div>
+            <div class="custom-button-group">
+              <button [ngClass]="Gridactive ? 'content-button status-button' : 'content-button status-button open'" (click)="activeGridView()" >Grid view</button>
+              <button  [ngClass]="MapActive ? 'content-button status-button' : 'content-button status-button open'" (click)="activeMapView()">Map view</button>
+            </div>
+          </div>
+          
+          <div class="container-fluid" >
+    
+            <div *ngIf="Gridactive" class="row glass-row">
+              <div class="col-lg-12 col-md-6 col-sm-12">
+                  <div class="card glass-card">
+                    
+                      <div class="card-body" style=" width: 100%;
+                       height: calc(35rem)">
+
+                             <div class="taskedit">
+                              <p class="task_edits_header">
+                                Device RE-ASSIGNMENT <span class="text">Drag and drop to edit Device Mapping</span>
+                              </p>
+                            
+                              <div style="display: flex; flex-direction: row">
+                                <div class="panel-card">
+                                  <mat-card
+                                    *ngFor="let object of gridData; let i = index"
+                                    class="route_card"
+                                    cdkDropList
+                                    id="{{ object.levelName }}"
+                                    [cdkDropListData]="object.Spaces"
+                                    [cdkDropListConnectedTo]="userConnectedTo"
+                                    (cdkDropListDropped)="drop($event, object)"
+                                  >
+                                    <div
+                                      class="header-card"
+                                      style="
+                                        border-radius: 5px;
+                                        min-height: 65px;
+                                        box-sizing: border-box;
+                                        text-align: center;
+                                        padding: 10px;
+                                        position: relative;
+                                      "
+                                    >
+                                      <h6 style="font-size: 14px; position: absolute; left: 15px"
+                                        >Level: {{ object.levelName }}
+                                </h6>
+                                     
+                                      <h3
+                                        style="position: absolute; right: 10px; top: 28px; font-weight: 600"
+                                      >
+                                       <span
+                                          style="font-size: 7px; font-weight: 500; letter-spacing: 1px"
+                                        ></span>
+                                      </h3>
+                                    </div>
+                            
+                                    <mat-card
+                                      style="background-color: transparent; box-shadow: none"
+                                     
+                                      *ngFor="let user of object.Spaces; let j = index"
+                                      cdkDropList
+                                      id="{{ user.spaceId }}"
+                                      [cdkDropListData]="user.Devices"
+                                      [cdkDropListConnectedTo]="connectedTo"
+                                      (cdkDropListDropped)="drop($event, user)"
+                                    >
+                                      <div class="example-list">
+                                        <mat-card-header style="padding: 5px 0 0">
+                                          <mat-card-subtitle
+                                            style="width: 190px; font-weight: 400; margin: 10px"
+                                          >
+                                            <span class="task_edits_name">Space : {{ user.spaceName }} </span><br />
+                                           
+                                          </mat-card-subtitle>
+                                        </mat-card-header>
+                                        <mat-accordion [togglePosition]="'before'">
+                                          <div id="container">
+                                            <mat-expansion-panel
+                                              *ngFor="let task of user.Devices; let k = index"
+                                              cdkDrag
+                                              cdkDropList
+                                              id="{{ task.deviceId }}"
+                                              [cdkDropListData]="user.Devices"
+                                              (cdkDropListDropped)="drop($event, task)"
+                                              style="margin: 0px 5px 5px; border-radius: 5px"
+                                              class="example-box"
+                                            >
+                                              <mat-expansion-panel-header class="panel-header">
+                                                <mat-panel-title class="panel-title">
+                                                  {{ task['deviceType']   | titlecase }}
+                                                </mat-panel-title>
+                                              </mat-expansion-panel-header>
+                                              <mat-expansion-panel-body style="margin: none" cdkDrag>
+                                                <p
+                                                  style="
+                                                    height: auto;
+                                                    width: 140px;
+                                                    background-color: #7272725d;
+                                                    border-radius: 5px;
+                                                    margin: 5px -3px;
+                                                    padding: 7px 5px;
+                                                  "
+                                                >
+                                                  {{ task['deviecSourceId'] }}
+                                                </p>
+                                              </mat-expansion-panel-body>
+                                            </mat-expansion-panel>
+                                          </div>
+                                        </mat-accordion>
+                                      </div>
+                                    </mat-card>
+                                  </mat-card>
+                                </div>
+                            
+                                <div class="split right">
+                                  <div class="centered">
+                                    <span style="margin: 0px 5px 5px 8px" class="custom_tasks_label">
+                                      UNMAPPED DEVICES</span
+                                    >
+                                    <div>
+                                      <input
+                                      type="text"
+                                      placeholder="Search Device"
+                                      #input
+                                      class="search-input"
+                                      style="color: black"
+                                      (keyup)="applyFilter()"
+                                      [(ngModel)]="searchtext"
+                                    />
+                                      <div>
+                                   
+                                        <mat-card
+                                          style="background-color: transparent; box-shadow: none"
+                                          cdkDropList
+                                          id="unassigned1@unassigned1"
+                                        >
+                                          <div
+                                            class="side-list"
+                                            cdkDropList
+                                            [cdkDropListConnectedTo]="connectedTo"
+                                            [cdkDropListData]="unMappedDevices"
+                                            (cdkDropListDropped)="drop($event)"
+                                            id="unassigned@unassigned.com"
+                                          >
+                                            <mat-accordion>
+                                              <mat-expansion-panel
+                                                *ngFor="let task of unMappedDevices"
+                                                cdkDrag
+                                                class="side-box"
+                                                id="{{ task.deviceId}}"
+                                                style="border-radius: 5px"
+                                              >
+                                                <mat-expansion-panel-header class="panel-header">
+                                                  <mat-panel-title class="panel-title">
+                                                    {{ task.deviceType | titlecase }}
+                                                  </mat-panel-title>
+                                                </mat-expansion-panel-header>
+                                                <mat-expansion-panel-body style="margin: none" cdkDrag>
+                                                  <p
+                                                    style="
+                                                      height: auto;
+                                                      width: 140px;
+                                                      background-color: #7272725d;
+                                                      border-radius: 5px;
+                                                      margin: 5px -3px;
+                                                      padding: 7px 5px;
+                                                    "
+                                                  >
+                                                    {{ task['deviecSourceId'] }}
+                                                  </p>
+                                                </mat-expansion-panel-body>
+                                              </mat-expansion-panel>
+                                            </mat-accordion>
+                                          </div>
+                                        </mat-card>
+                                      </div>
+                                    </div>
+                                 
+                                   
+                                  </div>
+                                </div>
+                              </div>
+                            
+                            
+                            
+                            
+                            </div>
+                            
+                      </div>
+                  </div>
+              </div>
+            </div>
+            <div *ngIf="MapActive">
+              <app-device-floor-plan (showToolbar)="ShowToolbar($event)" [SelectedLevelData]="SelectedLevelObj"></app-device-floor-plan>
+
+            </div>
+           
+          </div>
+    
+        </div>
+      </div>
+    </div>
+
+
+

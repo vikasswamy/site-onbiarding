@@ -15,10 +15,11 @@ import { UploadFileComponent } from './upload-file/upload-file.component';
 import { AddDeviceformComponent } from './add-deviceform/add-deviceform.component';
 import { FormsModule } from '@angular/forms';
 import { DeviceMenuComponent } from './device-menu/device-menu.component';
+import { DeleteDeviceDialogComponent } from './delete-device-dialog/delete-device-dialog.component';
 registerPlugin(FilePondPluginFileValidateType);
 
 @NgModule({
     imports: [CommonModule, NgbCarouselModule, NgbAlertModule, DashboardRoutingModule,AppMaterialModule,FilePondModule,FormsModule],
-    declarations: [DashboardComponent, TimelineComponent, NotificationComponent, ChatComponent, MenuItemComponent, ChildMenuComponent,UploadFileComponent, AddDeviceformComponent, DeviceMenuComponent]
+    declarations: [DashboardComponent, TimelineComponent, NotificationComponent, ChatComponent, MenuItemComponent, ChildMenuComponent,UploadFileComponent, AddDeviceformComponent, DeviceMenuComponent, DeleteDeviceDialogComponent]
 })
 export class DashboardModule {}

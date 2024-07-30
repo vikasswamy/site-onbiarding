@@ -11,6 +11,9 @@ export type Maps = typeof google.maps;
 export class MaplocationService {
   public falicityGridData = new BehaviorSubject <any>([]);
   facilityDataGrid = this.falicityGridData.asObservable();
+  UnmappedDevices:BehaviorSubject<any> = new BehaviorSubject([]);
+
+  
   private siteparams = new BehaviorSubject <any>([]);
   addSiteData = this.siteparams.asObservable();
 
@@ -90,6 +93,14 @@ export class MaplocationService {
       catchError(this.handleError)
     );
   }
+  getLevelSpaceDevicesGridData(Id:any){
+    return this.http.get(
+      environment.apiBaseUrl+`/Levels/gridDatabyFacilityId/${Id}`
+    ).pipe(
+      retry(1),
+      catchError(this.handleError)
+    );
+  }
   getAlldDevice(){
     return this.http.get(
       environment.apiBaseUrl + `/Devices`
@@ -115,9 +126,33 @@ export class MaplocationService {
       catchError(this.handleError)
     );
   }
+  deleteDevice(dId:any){
+    return this.http.delete(
+      environment.apiBaseUrl+`/Devices/${dId}`
+    ).pipe(
+      retry(1),
+      catchError(this.handleError)
+    );
+  }
+  deleteFacility(facilityId:any){
+    return this.http.delete(
+      environment.apiBaseUrl+`/Facilities/${facilityId}`
+    ).pipe(
+      retry(1),
+      catchError(this.handleError)
+    );
+  }
   deletespace(sapceId:any){
     return this.http.delete(
       environment.apiBaseUrl+`/Spaces/${sapceId}`
+    ).pipe(
+      retry(1),
+      catchError(this.handleError)
+    );
+  }
+  getFacilitiessBySiteId(Id:any){
+    return this.http.get(
+      environment.apiBaseUrl+`/Facilities/bySiteId/${Id}`
     ).pipe(
       retry(1),
       catchError(this.handleError)
@@ -151,6 +186,15 @@ export class MaplocationService {
   updateSpace(data:any){
     return this.http.put(
       environment.apiBaseUrl + `/Spaces/updateSpace`,
+      data
+    ).pipe(
+      retry(1),
+      catchError(this.handleError)
+    );
+  }
+  updateDevice(data:any){
+    return this.http.put(
+      environment.apiBaseUrl + `/Devices/updatedevice`,
       data
     ).pipe(
       retry(1),

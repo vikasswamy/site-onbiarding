@@ -1,11 +1,67 @@
 <div class="main-container">
-    <div class="content-wrapper">
+  <div *ngIf="isAllFacilities" class="container-wrapper">
+    <div class="container"   >
+      <div #screen  class="card-container" id="container" [style.grid-template-columns]="No_of_columns">
+        <div class="card">
+            <div class="card-body" style="  width: 100%;
+            justify-content: center;
+            padding: auto;
+            height: 100%;overflow: hidden;
+            background-color: transparent;
+            position: relative;">
+             
         
-            <div class="content-section-title">Provide your Facilty Location and Facility outline form Map</div>
-         
+                    <div class="icon" (click)="addNew()"> <svg width="100" height="100" style="cursor: pointer;" class="bi bi-plus" viewBox="0 0 16 16">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
+                            <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"/>
+                          </svg>
+                    </svg>
+                    <p>Add Level </p>
+               
+                 
+                </div>
+           
+            </div>
+        </div>
+      <div *ngFor="let card of AllFacilities;let i = index" class="card">
+        
+        <div class="card-body" [attr.id]="card.facilityId" style="  width: 100%;
+            height: 100%;overflow: hidden;
+            background-color: transparent;
+            position: relative;">
+            <div class="imagecontainer">
+              <img [src]="card.fileUrl" alt="" />
+              <p class="title">{{card.facilityName}}</p>
+              <div class="overlay"></div>
+              <div class="button">
+                
+                <button class="content-button status-button open" (click)="viewFacility(card)"> view </button>
+                <button class="content-button status-button" (click)="editFacility(card)"> Edit </button>
+                <button class="dange-button " (click)="deleteFacility(card)"> Delete </button>
+              </div>
+            </div>
+        </div>
+        
+        <!-- <div class="card-footer text-light   d-flex justify-content-between color">
+            <h5>Time: {{timeValue}} </h5> <h5>Occupancy: {{card.Occupancy}} </h5>
+        </div> -->
+      </div>
+
+    </div>
+    </div>
+  </div>
+    <div *ngIf="!isAllFacilities" class="content-wrapper">
+      <div class="d-flex justify-content-between mb-2 align-items-center">
+            <div class="content-section-title">
+              {{editing? 'Drag and Drop Marker to update Facility Location & Edit Facility Name':NewFacility?'Provide your Facilty Location and Facility outline form Map':'View Faciliy '}}</div>
+            <button *ngIf="viewing" mat-fab extended (click)="backtoAllFacilities()" >
+              <mat-icon>dashboard</mat-icon>
+              Back to All Floors
+            </button>
+      </div>
         <div class="container-fluid " >
             <div class="row glass-row">
-                <div class="col-lg-9 col-md-6 col-sm-12">
+                <div [ngClass]=" viewing ? 'col-lg-12 col-md-6 col-sm-12' : 'col-lg-9 col-md-6 col-sm-12'" >
                     <div class="card glass-card">
                 
                         <div class="card-body" style=" width: 100%;
@@ -16,7 +72,7 @@
                  
                       </div>
                 </div>
-                <div class="col-lg-3 col-md-6 col-sm-12">
+                <div *ngIf="!viewing" class="col-lg-3 col-md-6 col-sm-12">
                     <div class="card-body">
                     
                     <div class="card glass-card">
@@ -122,7 +178,7 @@
                               [disabled]="!Facilityform.valid"
           
                             >
-                              Submit
+                             {{editing?'Update':' Submit'}}
                             </button>
                             <button type="button" class="content-button status-button open" (click)="Facilityform.resetForm({})">Reset</button>
                           </form>

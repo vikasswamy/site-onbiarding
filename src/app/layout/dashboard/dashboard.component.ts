@@ -8,8 +8,11 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
 import { AddDeviceformComponent } from './add-deviceform/add-deviceform.component';
 import { MatPaginator } from '@angular/material/paginator';
+import { MatIcon } from '@angular/material/icon';
+import { DeleteDeviceDialogComponent } from './delete-device-dialog/delete-device-dialog.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
 export interface PeriodicElement {
-    "Device Type":string, "Device Source Id":string, "Basic": string, "Advanced" :string
+ "DeviceId":string,  "Device Type":string, "Device Source Id":string, "Basic": string, "Advanced" :string
  }
 @Component({
     selector: 'app-dashboard',
@@ -32,6 +35,7 @@ export class DashboardComponent implements OnInit {
     containerWidth: number;
     @ViewChild("container", { static: true, read: ElementRef })
     container: ElementRef;
+  SelectedSiteId: any;
     @HostListener("window:resize") windowResize() {
         let newCardsPerPage = this.getCardsPerPage();
         if (newCardsPerPage != this.cardsPerPage) {
@@ -52,13 +56,13 @@ export class DashboardComponent implements OnInit {
     dataSource = new MatTableDataSource<PeriodicElement>([]);
     dataSourceFilters = new MatTableDataSource(this.ELEMENT_DATA);
     
-  columnsToDisplay = ["Device Type", "Device Source Id", "Basic", "Advanced" ];
+  columnsToDisplay = ["Delete","DeviceId","Device Type", "Device Source Id", "Basic", "Advanced" ];
   expandedElement: PeriodicElement | null;
     navItems: NavItem[] = [
         {
         parentName:'',
         parentId:'',
-          displayName: 'select Facility >> Level',
+          displayName: 'select Site >> Facility',
           id:'',
           geometry:{},
           children: [
@@ -69,7 +73,7 @@ export class DashboardComponent implements OnInit {
     SelectedFacility:any='Select Facility'
     AllSites:any=[];
     hasFacility:boolean=true;
-    constructor(private router:Router,private dashboardService:MaplocationService,private dialog:MatDialog) {
+    constructor(private router:Router,private dashboardService:MaplocationService,private dialog:MatDialog,private snackbar:MatSnackBar) {
        
     }
     
@@ -105,10 +109,11 @@ export class DashboardComponent implements OnInit {
       }
     goToAddLevel(){
         this.router.navigate(["/add-facility"],
-            { queryParams: { siteName:this.SelectedSite} });
+            { queryParams: { siteName:this.SelectedSite,siteId:this.SelectedSiteId} });
     }
     setSelectedSiteValue(values:any){
         this.SelectedSite=values.siteName;
+        this.SelectedSiteId = values.siteId;
         this.goToAddLevel()
     }
     applyFilter(event: any) {
@@ -119,11 +124,15 @@ export class DashboardComponent implements OnInit {
         this.ELEMENT_DATA = [];
 
         this.dashboardService.getAlldDevice().subscribe((data:any)=>{
+          let arr:any=[];
             if(data.length>0){
-                console.log(data)
+              
                 data.forEach((ele:any) => {
-                  if(!ele.Facility_Id && !ele.Level_Id && !ele.Site_Id && !ele.Space_Id){
+                  if(ele.Facility_Id =='' && ele.Level_Id=='' && ele.Site_Id=='' && ele.Space_Id==''){
+                    arr.push(ele);
                     this.ELEMENT_DATA.push( {
+                       
+                        "DeviceId":ele.deviceId,
                         "Device Type":ele.deviceType,
                          "Device Source Id":ele.deviecSourceId,
                           "Basic":String(ele.isBasic),
@@ -132,6 +141,7 @@ export class DashboardComponent implements OnInit {
                   }
                    
                 });
+                this.dashboardService.UnmappedDevices.next(arr);
                 this.dataSource.data = this.ELEMENT_DATA;
             }
             
@@ -152,11 +162,13 @@ export class DashboardComponent implements OnInit {
         this.getFacilityGridData();
     }
     AddDevice(){
-        let dialogRef:any = this.dialog.open(AddDeviceformComponent);
+        let dialogRef:any = this.dialog.open(AddDeviceformComponent,{
+          disableClose: true});
         dialogRef.afterClosed().subscribe((dialogData:any) => {
             if(dialogData.event=='Submit'){
                 console.log(dialogData.data,"::::Dialog data:::::");
                 let obj:any ={
+                    "DeviceId":dialogData.data.deviceId,
                     "Device Type":dialogData.data.deviceType,
                      "Device Source Id":String(dialogData.data.deviecSourceId),
                       "Basic":String(dialogData.data.isBasic),
@@ -167,6 +179,33 @@ export class DashboardComponent implements OnInit {
                 this.dataSource.data = this.ELEMENT_DATA;
             }
         })
+    }
+    deleteElement(element: any) {
+      let dialogRef:any = this.dialog.open(DeleteDeviceDialogComponent,{
+        disableClose: true});
+      dialogRef.afterClosed().subscribe((dialogData:any) => {
+        if(dialogData.event=='Yes'){
+          this.deleteDevice(element.DeviceId)
+        }
+      })
+      console.log('Element to delete:', element);
+    }
+    deleteDevice(id: any) {
+      console.log(id,"::::DeviceId::::");
+
+      this.dashboardService.deleteDevice(id).subscribe((data: any) => {
+        console.log(data)
+        if (data) {
+          this.snackbar.open('Device Deleted ', 'ok', {
+            duration: 2000,
+            verticalPosition: "top", // Allowed values are  'top' | 'bottom'
+            horizontalPosition: "center",
+            panelClass: 'success-snackbar'
+            // Allowed values are 'start' | 'center' | 'end' | 'left' | 'right'
+          });
+          this.getAlldDevices();
+        }
+      })
     }
     getFacilityGridData(){
         this.dashboardService.getFacilityGridData().subscribe((gridData:any)=>{

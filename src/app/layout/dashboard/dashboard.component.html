@@ -122,16 +122,19 @@
         <ul>
           <table mat-table [dataSource]="dataSource" multiTemplateDataRows class="mat-elevation-z8">
             <ng-container matColumnDef="{{column}}"  *ngFor="let column of columnsToDisplay">
-              <th mat-header-cell *matHeaderCellDef class="column-name" style=" text-align: center; color: aliceblue;background-color: rgba(16 18 27 / 40%);">
-                <p *ngIf="column!=='icon'">{{column | uppercase }}</p> 
+              <th  mat-header-cell *matHeaderCellDef class="column-name" style=" text-align: center; color: aliceblue;background-color: rgba(16 18 27 / 40%);">
+                <p *ngIf="column!=='DeviceId' && column !== 'Delete'">{{column | uppercase }}</p> 
+                
               </th>
               <tbody >
                 <tr mat-header-row >
                   <td mat-cell *matCellDef="let element" >
-                  
-                    <p *ngIf="column!=='icon'" class="table-column" style=" text-transform: capitalize;text-align: center; color: aliceblue;"
+                    <button *ngIf="column === 'Delete'" mat-icon-button (click)="deleteElement(element)">
+                        <mat-icon>delete</mat-icon>
+                      </button>
+                    <p *ngIf="column!=='DeviceId' && column !== 'Delete'"  class="table-column" style=" text-transform: capitalize;text-align: center; color: aliceblue;"
                       >{{ element[column]| titlecase }}</p>
-                   
+                    
                   </td>
                 </tr>
               </tbody>
@@ -142,7 +145,7 @@
             <ng-container matColumnDef="spacerColumn">
               <td mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplay.length"></td>
             </ng-container>
-    
+
             <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
             <tr mat-row *matRowDef="let element; columns: columnsToDisplay;" class="example-element-row-bg  tablerow"
               [class.example-expanded-row]="expandedElement === element"
