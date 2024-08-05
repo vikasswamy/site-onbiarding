@@ -1,3 +1,10 @@
+.custom-button-group {
+  display: flex;
+button{
+    width: auto;  // Custom width
+    height: 30px;  // Custom height
+  }
+}
 .imagecontainer {
    position: relative;
    width: 100%;

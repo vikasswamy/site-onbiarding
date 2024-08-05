@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 @Component({
@@ -8,7 +8,8 @@ import { TranslateService } from '@ngx-translate/core';
 })
 export class HeaderComponent implements OnInit {
     public pushRightClass: string | undefined;
-
+    @Output() viewEvent = new EventEmitter<any>();
+    isChecked:any;
     constructor(private translate: TranslateService, public router: Router) {
        
     }
@@ -16,6 +17,10 @@ export class HeaderComponent implements OnInit {
         this.router.navigate(['/dashboard']);
     }
     ngOnInit() {
-    }
 
+    }
+    checkValue(event:any){
+        console.log(event);
+        this.viewEvent.emit(event)
+    }
 }

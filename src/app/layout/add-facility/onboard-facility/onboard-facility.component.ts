@@ -28,7 +28,7 @@ export class OnboardFacilityComponent implements OnInit, AfterViewInit {
   sas=environment.sasToken;
   No_of_columns: any = '1fr 1fr 1fr 1fr ';
   sites:any=[];
-  public form = {
+  public form:any = {
     siteId: '',
     facilityName:'',
     imageUrl:'',
@@ -45,7 +45,7 @@ export class OnboardFacilityComponent implements OnInit, AfterViewInit {
   @ViewChild('Facilityform') myForm:any;
   obtainedSiteName: any;
   mapMarker: any;
-  drawToolitems: any=['Polygon'];
+  drawToolitems: any=['Rectangle'];
   layer: any;
   fileName: any;
   fileType: any;
@@ -120,7 +120,7 @@ ngAfterViewInit(): void {
     this.form.facilityName = data.facilityName;
     this.form.siteId = this.obtainedSiteId;
     this.form.imageUrl = data.fileUrl;
-
+    this.form.facilityId =data.facilityId
 
     setTimeout(() => {
       this.initMap();
@@ -168,6 +168,8 @@ ngAfterViewInit(): void {
           this.isAllFacilities = true;
           console.log(responce,"getFacilitesbySiteId")
           this.AllFacilities=responce;
+        }else{
+          this.addNew()
         }
     })  
   }
@@ -196,14 +198,14 @@ ngAfterViewInit(): void {
       baseLayer: new maptalks.GroupTileLayer('Base TileLayer', [
        
         new maptalks.TileLayer('Carto Dark',{
-          'visible' : true,
+          'visible' : false,
           repeatWorld :false,
           urlTemplate:"https://{s}.basemaps.cartocdn.com/dark_nolabels/{z}/{x}/{y}.png",
             subdomains: ["a", "b", "c", "d"]
         }),
         
         new maptalks.TileLayer('Satellite',{
-          'visible' : false,
+          'visible' : true,
           repeatWorld :false,
           'urlTemplate': 'http://{s}.google.com/vt/lyrs=s,h&x={x}&y={y}&z={z}',
           subdomains: ['mt0','mt1','mt2','mt3'],
@@ -783,13 +785,13 @@ ngAfterViewInit(): void {
         this.blobService.uploadImage(this.sas, this.file, this.obtainedSiteName.replace(/\s+/g, '')+"/"+ this.form.facilityName.replace(/\s+/g, '')+"/"+this.fileType + "/" + this.file.name, () => {
         });
         this.form.imageUrl = `https://storagesmartroute27.blob.core.windows.net/filesupload/${this.obtainedSiteName.replace(/\s+/g, '')}/${this.form.facilityName.replace(/\s+/g, '')}/${this.fileType}/${this.fileName}`;
-        this.addFacility(this.form)
+        !this.editing?this.addFacility(this.form):this.updateFacility(this.form)
       }
     }
     else if(this.file =='ignore' && Data){
       console.log(Data,"API payload");
       this.form.imageUrl='';
-       this.addFacility(this.form)
+      !this.editing?this.addFacility(this.form):this.updateFacility(this.form);
     }
     this.facilityService.obtainedError.subscribe((err:any)=>{
       console.log(err,"error message");
@@ -805,8 +807,31 @@ ngAfterViewInit(): void {
      
     })
   }
+  private reloadImages() {
+    this.blobService.listImages(this.sas).then((list) => {
+      if(list){
+        this.myForm.resetForm({});
+        this.getFacilitesbySiteId(this.obtainedSiteId);
+      }
+    });
 
-  addFacility(payload){
+  }
+  updateFacility(payload:any){
+    this.facilityService.UpdateFacility(payload).subscribe((request:any)=>{
+      console.log(request,"request responce body");
+      if(request){
+        this.snackbar.open('Facility Updated Successfully','ok',{
+          duration: 2000,
+          panelClass:'success-snackbar',
+          verticalPosition: "top", // Allowed values are  'top' | 'bottom'
+          horizontalPosition: "center" // Allowed values are 'start' | 'center' | 'end' | 'left' | 'right'
+        });
+        this.reloadImages()
+       
+      }
+    })
+  }
+  addFacility(payload:any){
     this.facilityService.addFacility(payload).subscribe((request:any)=>{
       console.log(request,"request responce body");
       if(request){
@@ -816,9 +841,7 @@ ngAfterViewInit(): void {
           verticalPosition: "top", // Allowed values are  'top' | 'bottom'
           horizontalPosition: "center" // Allowed values are 'start' | 'center' | 'end' | 'left' | 'right'
         });
-        this.myForm.resetForm({});
-        this.routers.navigate(["/add-level"],
-          { queryParams: { facilityName:request.facilityName } });
+        this.reloadImages()
       }
     })
   }
@@ -834,25 +857,134 @@ ngAfterViewInit(): void {
         this.form.lan=filteredSite.location.coordinates[0];
           this.form.lat=filteredSite.location.coordinates[1];
         this.map.setCenterAndZoom(filteredSite.location.coordinates,20);
-        this.mapMarker = new maptalks.Marker(
-          filteredSite.location.coordinates,
-          {
-            'draggable':true,
-          'symbol' : {
-            'markerFile'   : '../../../../assets/buildings.png',
-            'markerWidth'  : 28,
-            'markerHeight' : 40,
-            'markerDx'     : 0,
-            'markerDy'     : 0,
-            'markerOpacity': 1
-          }
+        let customoptions:CustomHtmlOptions= {
+          'draggable': true,
+          'single': false,
+          'id' : this.obtainedSiteId,
+          'name': this.obtainedSiteName,
+          'type': 'sitemarker',
+          'content': `
+          <style>   
+    .pin {
+  width: 30px;
+  height: 30px;
+  border-radius: 50% 50% 50% 0;
+  background: #00cae9;
+  position: absolute;
+  transform: rotate(-45deg);
+  left: 50%;
+  top: 50%;
+  margin: -20px 0 0 -20px;
+}
+.pin:after {
+  content: "";
+  width: 14px;
+  height: 14px;
+  margin: 8px 0 0 8px;
+  background: #e6e6e6;
+  position: absolute;
+  border-radius: 50%;
+}
+
+.bounce {
+  animation-name: bounce;
+  animation-fill-mode: both;
+  animation-duration: 1s;
+}
+
+.pulse {
+  background: #d6d4d4;
+  border-radius: 50%;
+  height: 14px;
+  width: 14px;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  margin: 11px 0px 0px -12px;
+  transform: rotateX(55deg);
+  z-index: -2;
+}
+.pulse:after {
+  content: "";
+  border-radius: 50%;
+  height: 40px;
+  width: 40px;
+  position: absolute;
+  margin: -13px 0 0 -13px;
+  animation: pulsate 1s ease-out;
+  animation-iteration-count: infinite;
+  opacity: 0;
+  box-shadow: 0 0 1px 2px #00cae9;
+  animation-delay: 1.1s;
+}
+
+@keyframes pulsate {
+  0% {
+    transform: scale(0.1, 0.1);
+    opacity: 0;
+  }
+
+  50% {
+    opacity: 1;
+  }
+
+  100% {
+    transform: scale(1.2, 1.2);
+    opacity: 0;
+  }
+}
+
+@keyframes bounce {
+  0% {
+    opacity: 0;
+    transform: translateY(-2000px) rotate(-45deg);
+  }
+
+  60% {
+    opacity: 1;
+    transform: translateY(30px) rotate(-45deg);
+  }
+
+  80% {
+    transform: translateY(-10px) rotate(-45deg);
+  }
+
+  100% {
+    transform: translateY(0) rotate(-45deg);
+  }
+}
+          </style>
+          <div class='pin bounce'></div>
+<div class='pulse'></div>
+         
+          `,
         }
-        ).addTo(this.map.getLayer('vector')).addEventListener('dragend',(e:any)=>{
+        this.FacilityMarker= new ui.UIMarker(filteredSite.location.coordinates, customoptions).addEventListener('dragend',(e:any)=>{
           console.log(e,"afterdraging");
           const lngLat = e.coordinate;
           this.form.lan=lngLat.x;
           this.form.lat=lngLat.y;
-        });
+        }).addTo(this.map)
+
+        // this.mapMarker = new maptalks.Marker(
+        //   filteredSite.location.coordinates,
+        //   {
+        //     'draggable':true,
+        //   'symbol' : {
+        //     'markerFile'   : '../../../../assets/buildings.png',
+        //     'markerWidth'  : 28,
+        //     'markerHeight' : 40,
+        //     'markerDx'     : 0,
+        //     'markerDy'     : 0,
+        //     'markerOpacity': 1
+        //   }
+        // }
+        // ).addTo(this.map.getLayer('vector')).addEventListener('dragend',(e:any)=>{
+        //   console.log(e,"afterdraging");
+        //   const lngLat = e.coordinate;
+        //   this.form.lan=lngLat.x;
+        //   this.form.lat=lngLat.y;
+        // });
 
         
     })

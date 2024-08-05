@@ -235,4 +235,10 @@ export class DashboardComponent implements OnInit {
         });
 
     }
+    GoToViewDetails(data:any){
+      console.log(data,'::::router data::::');
+    this.router.navigate(["/viewSite"],
+      { queryParams: {"siteName":data.siteName,"siteId":data.siteId} });
+  
+    }
 }

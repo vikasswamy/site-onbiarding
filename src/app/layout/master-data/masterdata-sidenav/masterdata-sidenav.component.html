@@ -1,0 +1,73 @@
+
+<div  [ngClass]="clicked ? 'darSideBar' : 'master-side'">
+        
+    <div *ngIf="!clicked" class="content">
+        <div class="side-wrapper">
+            <div class="side-title">Apps</div>
+            <div class="masterside-menu">
+             <a routerLink="masterData">
+              <!-- <svg viewBox="0 0 512 512">
+              </svg> -->
+              <mat-icon>dashboard</mat-icon>
+              Master Data
+             </a>
+             <a routerLink="deviceManagement">
+                <mat-icon>important_devices</mat-icon>
+              Device management
+            
+             </a>
+             <a routerLink="filemanagement">
+              <mat-icon>insert_drive_file</mat-icon>
+             Manage File Storage
+           
+           </a>
+            </div>
+           </div>
+           <div class="side-wrapper">
+            <div class="side-title">Route portal</div>
+            <div class="masterside-menu">
+             <a routerLink="team-Availability">
+                <mat-icon>people_outline</mat-icon>
+              Staff Availability
+             </a>
+             <a routerLink="alerts">
+                <mat-icon>add_alert</mat-icon>
+              Create Alerts
+             </a>
+            
+            </div>
+           </div>
+           <div class="side-wrapper">
+            <div class="side-title">Occupancy </div>
+            <div class="masterside-menu">
+                <a routerLink="insights">
+                    <mat-icon>nfc</mat-icon>
+                    Insights
+                 </a>
+                 <a routerLink="servicing">
+                    <mat-icon>room_service</mat-icon>
+                    servicing
+                 </a>
+            </div>
+           </div>
+           <div class="side-wrapper">
+            <div class="side-title">Premitive Maintenance</div>
+            <div class="masterside-menu">
+                <a routerLink="pmHome">
+                    <mat-icon>build</mat-icon>
+                    Component 1
+                 </a>
+                 <a routerLink="PmComponent">
+                    <mat-icon>extension</mat-icon>
+                    Component 2
+                 </a>
+            </div>
+           </div>
+    </div>
+
+
+
+
+
+</div>
+

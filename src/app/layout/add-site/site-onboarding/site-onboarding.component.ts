@@ -135,11 +135,19 @@ export class SiteOnboardingComponent  implements OnInit,AfterViewInit  {
             verticalPosition: "top", // Allowed values are  'top' | 'bottom'
             horizontalPosition: "center" // Allowed values are 'start' | 'center' | 'end' | 'left' | 'right'
           });
-          this.myForm.resetForm({});
-          this.router.navigate(["/add-facility"],
-            { queryParams: { siteName:request.siteName } });
+          this.reloadImages()
         }
       })
+    }
+    private reloadImages() {
+      this.blobService.listImages(this.sas).then((list) => {
+        if(list){
+        
+        this.myForm.resetForm({});
+          this.router.navigate(["/dashboard"]);
+        }
+      });
+  
     }
   openDialog(){
     let dialogRef:any=this.dialog.open(UploadFileComponent,{

@@ -44,7 +44,8 @@ export class MapDevicesComponent implements OnInit{
   unMappedDevices :any = [];
 toggleEnum = ToggleEnum;
   selectedState = ToggleEnum.Option3;
-        
+  public openMenu: boolean = false;
+  isOver = false;
   SelectedLevelObj:any;
 
   connectedTo: any = [];
@@ -64,7 +65,8 @@ toggleEnum = ToggleEnum;
   levlesData:any=[]
   activeButton: number = 1;
   showToolbar:any;
-
+  isClicked: boolean = false;
+ 
 
   constructor(private dialog:MatDialog,private dashboardService : MaplocationService,private router: ActivatedRoute,private route: Router,private snackbar: MatSnackBar){
     this.router.queryParams.subscribe((params: any) => {
@@ -86,6 +88,9 @@ toggleEnum = ToggleEnum;
     //this.groupByRoutesDetails();
    // this.groupByDevoiceDetails();
     //console.log(this.dashboardService.un)
+  }
+  public toggleMenu() {
+    this.isClicked = !this.isClicked;
   }
   ShowToolbar(event:any){
     console.log(event,'showToolbar::::;');
@@ -122,11 +127,26 @@ toggleEnum = ToggleEnum;
   }
   getAlldDevices(){
     this.ELEMENT_DATA = [];
-
+    this.unMappedDevices=[];
     this.dashboardService.getAlldDevice().subscribe((data:any)=>{
       console.log(data,':::::')
         if(data.length>0){
             data.forEach((ele:any) => {
+              if(ele.deviceType == 'Smart Display' ){
+                ele.src='../../../../assets/images/smart-display.png'
+              }
+              else if(ele.deviceType == 'Work Validation Scanner'){
+                ele.isAdvance? ele.src='../../../../assets/images/scan-advance.png':ele.src='../../../../assets/images/barcode-scanner-advance.png'
+          
+              }
+              else if(ele.deviceType == 'Occupancy Sensor'){
+                ele.isAdvance? ele.src='../../../../assets/images/ocp-advance.png':ele.src='../../../../assets/images/occp-basic.png'
+          
+              }
+              else if(ele.deviceType == 'People Counter'){
+                 ele.src='../../../../assets/images/people-enter.png'
+              }
+
               if(ele.Facility_Id=='' && ele.Level_Id=='' && ele.Site_Id=='' && ele.Space_Id==''){
                 this.ELEMENT_DATA.push(ele);
               }
@@ -159,7 +179,7 @@ applyFilter() {
   }
 }
 
-  drop(event: CdkDragDrop<any>, user?: any) {
+  async drop(event: CdkDragDrop<any>, user?: any) {
 
 
     // From Assigned to Unassigned.
@@ -190,7 +210,8 @@ applyFilter() {
           );
           console.log( event.previousContainer,' event.previousContainer');
           console.log( event.container,' event.previousContainer');
-          this.updateDevice(draggedobj);
+         await this.updateDevice(draggedobj);
+         //this.getDevicesLevelSpacesgridData(this.obtainedFaciltiyId)
         }
         //this.toUpdateItems[aboutToAssignObj.Id] = aboutToAssignObj;
       }
@@ -287,21 +308,25 @@ applyFilter() {
   getDevicesLevelSpacesgridData(fId:any){
     this.gridData=[];
     this.levlesData=[];
+    this.unMappedDevices=[];
     this.dashboardService.getLevelSpaceDevicesGridData(fId).subscribe((data:any)=>{
       let responceData:any = data;
+     
       console.log(responceData,"::::getLevelSpaceDevicesGridData::");
       this.gridData=responceData;
       this.levlesData=[...this.levlesData,...this.gridData];
       this.dashboardService.UnmappedDevices.subscribe((devicesData:any)=>{
-        if(devicesData.length==0){
-         this.getAlldDevices();
-        }else{
+        
           this.unMappedDevices = devicesData;
           this.groupByDevoiceDetails();
-        }
+        
         
        });
+       this.getAlldDevices();
     })
+  }
+  clickMenu() {
+    this.openMenu = !this.openMenu;
   }
   groupByDevoiceDetails() {
     for (let udx in this.gridData) {
@@ -313,6 +338,21 @@ applyFilter() {
         
         for (let ldx in spaceObj.Devices) {
           let listObj = spaceObj.Devices[ldx];
+          if(listObj.deviceType == 'Smart Display' ){
+            listObj.src='../../../../assets/images/smart-display.png'
+          }
+          else if(listObj.deviceType == 'Work Validation Scanner'){
+            listObj.isAdvance? listObj.src='../../../../assets/images/scan-advance.png':listObj.src='../../../../assets/images/barcode-scanner-advance.png'
+      
+          }
+          else if(listObj.deviceType == 'Occupancy Sensor'){
+            listObj.isAdvance? listObj.src='../../../../assets/images/ocp-advance.png':listObj.src='../../../../assets/images/occp-basic.png'
+      
+          }
+          else if(listObj.deviceType == 'People Counter'){
+             listObj.src='../../../../assets/images/people-enter.png'
+          }
+        
            this.taskConnectedTo.push(listObj.deviceId)
 
         }
@@ -330,7 +370,7 @@ applyFilter() {
     
 
   }
-  updateDevice(draggedOj:any){
+  async updateDevice(draggedOj:any){
     console.log(draggedOj,':::::payload for Update Device::::');
     this.dashboardService.updateDevice(draggedOj).subscribe((responce:any)=>{
       console.log(responce,"::::responce:::::");

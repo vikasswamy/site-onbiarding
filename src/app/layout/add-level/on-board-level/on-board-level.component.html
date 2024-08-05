@@ -71,17 +71,17 @@
               {{editing? 'Add or Update or Delete Spaces for the Floor': viewing? 'View Floor click back to All Floors': NewLevel ? 'Upload Floor plans and create Spaces':''}}
               
              </div>
-             <button *ngIf="viewing" mat-fab extended (click)="backtoAllFloors()" >
-              <mat-icon>dashboard</mat-icon>
-              Back to All Floors
-            </button>
+             
+           
               <div class="tool-bar" *ngIf="showToolbar">
                 <mat-icon (click)="endEdit()"> check_circle_outline</mat-icon>
                 <mat-icon  (click)="deleteGeometry()"> delete_outline</mat-icon>
               </div>
-            <button class="content-button status-button" *ngIf="enablecreateLevel && !viewing" (click)="toggleRightSideBar()" >
-              {{isbuttonClikced ? 'Back':'Next '}}
-            </button>
+              <div  class="custom-button-group">
+                <button *ngIf="noEvents" [ngClass]="viewing ? 'content-button status-button' : 'content-button status-button open'" (click)="backtoAllFloors()" >Back to All Floors</button>
+                <button *ngIf="enablecreateLevel && !viewing" class='content-button status-button' (click)="toggleRightSideBar()"> {{isbuttonClikced ? 'Back':'Next '}}</button>
+              </div>
+          
           </div>    
                     <div [ngClass]=" viewing ? 'container-fluid' : 'container'" >
                         <div class="row glass-row">

@@ -26,7 +26,9 @@
                     >
                       <mat-expansion-panel-header class="panel-header">
                         <mat-panel-title class="panel-title">
-                          {{ task.deviceType | titlecase }}
+                         <img [src]="task.src" style="width: 30px;
+height: 30px;
+border-radius: 50% 50% 50% 0;"> {{ task.deviceType | titlecase }}
                         </mat-panel-title>
                       </mat-expansion-panel-header>
                       <mat-expansion-panel-body style="margin: none" cdkDrag>

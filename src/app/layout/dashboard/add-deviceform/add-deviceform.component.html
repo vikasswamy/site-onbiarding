@@ -46,7 +46,7 @@
                   <p *ngIf="DeviceId.errors">DeviceId is required</p>
                 </div>
               </div>
-              <div class="group-gap">
+              <div *ngIf="form.deviceTypeId==2 || form.deviceTypeId==3" class="group-gap">
                 <h5 class="mb-3">Device Model</h5>
                 <div class="d-block my-3">
 
@@ -64,7 +64,7 @@
           <p>Please select either value</p>
         </div>
       </div>
-    </div>
+              </div>
               <div class="btn-group d-flex" id="btn-group">
                 <button class="content-button status-button open" mat-dialog-close>Cancel</button>
                 <button [disabled]="!deviceForm.valid"class="content-button status-button" type="submit">Proceed</button>

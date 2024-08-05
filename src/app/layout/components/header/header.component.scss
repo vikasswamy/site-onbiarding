@@ -1,1 +1,28 @@
 
+  .toggleCheckbox:checked + .toggleContainer::before {
+     left: 50%;
+  }
+  .toggleContainer div {
+    padding: 6px;
+    text-align: center;
+    z-index: 1;
+  }
+  .toggleCheckbox {
+    display: none;
+  }
+  .toggleCheckbox:checked + .toggleContainer div:first-child{
+    color: white;
+    transition: color 0.3s;
+  }
+  .toggleCheckbox:checked + .toggleContainer div:last-child{
+    color: #343434;
+    transition: color 0.3s;
+  }
+  .toggleCheckbox + .toggleContainer div:first-child{
+    color: #343434;
+    transition: color 0.3s;
+  }
+  .toggleCheckbox + .toggleContainer div:last-child{
+    color: white;
+    transition: color 0.3s;
+  }
