@@ -67,6 +67,7 @@
                       [class.is-valid]="(Latitude.dirty || Latitude.touched)"
                       [class.is-invalid]="Latitude.invalid && (Latitude.dirty || Latitude.touched)"
                       required
+                      disabled="true"
                     />
                     <input
                     type="text"
@@ -79,6 +80,7 @@
                     [class.is-valid]="(Langitude.dirty || Langitude.touched)"
                     [class.is-invalid]="Langitude.invalid && (Langitude.dirty || Langitude.touched)"
                     required
+                    disabled="true"
                   />
                   <div class="form-control-feedback" *ngIf="Langitude.errors && (Langitude.dirty || Langitude.touched)">
                     <p *ngIf="Langitude.errors">Coordinates are required</p>
@@ -102,7 +104,9 @@
                      [(ngModel)]="form.siteAddress" 
                     [class.is-valid]="(address.dirty || address.touched)"
                     [class.is-invalid]="address.invalid && (address.dirty || address.touched)"
-                     required>
+                     required
+                     disabled="true"
+                     >
                     </textarea>
                     <div class="form-control-feedback" *ngIf="address.errors && (address.dirty || address.touched)">
                       <p *ngIf="address.errors">Address is required</p>
@@ -125,7 +129,9 @@
                     #TimeZone="ngModel"
                     [class.is-valid]="(address.dirty || address.touched)"
                     [class.is-invalid]="address.invalid && (address.dirty || address.touched)"
-                    required>
+                    required
+                    disabled="true"
+                    >
                     </textarea>
                     <div class="form-control-feedback" *ngIf="TimeZone.errors && (TimeZone.dirty || TimeZone.touched)">
                       <p *ngIf="TimeZone.errors">TimeZone required</p>

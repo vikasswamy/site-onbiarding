@@ -63,6 +63,7 @@ export class OnBoardLevelComponent implements OnInit, AfterViewInit {
   selectedRoomName: any;
   obtainSiteName: any;
   Levels: any = [];
+  noEvents:boolean=true;
   AllLevelsData: any = [];
   selectedLevelData: any;
   spacesData: any[];
@@ -104,6 +105,7 @@ export class OnBoardLevelComponent implements OnInit, AfterViewInit {
   }
   editLevel(data: any) {
     this.selectedLevelData = data;
+    this.noEvents=true;
     this.NewLevel = false;
     this.editing = true;
     this.viewing = false;
@@ -138,7 +140,8 @@ export class OnBoardLevelComponent implements OnInit, AfterViewInit {
   }
   deleteLevel(data: any) {
     this.selectedLevelData = data;
-    let deletePop: any = this.dialog.open(DeleteDialogComponent);
+    let deletePop: any = this.dialog.open(DeleteDialogComponent,{
+      disableClose: true});
     deletePop.afterClosed().subscribe((dailogEvent: any) => {
       if (dailogEvent.event == 'Yes') {
         this.deleteselectedLevel(data.levelId);
@@ -257,10 +260,8 @@ export class OnBoardLevelComponent implements OnInit, AfterViewInit {
           verticalPosition: "top", // Allowed values are  'top' | 'bottom'
           horizontalPosition: "center" // Allowed values are 'start' | 'center' | 'end' | 'left' | 'right'
         });
-        this.form.SpacesList = [];
-        this.myForm.resetForm({});
-        this.toggleRightSideBar();
-        this.getLevelsByFacilityId(this.obtainedFaciltiyId)
+      
+        this.reloadImages()
       }
 
     }, (error) => {
@@ -352,7 +353,8 @@ export class OnBoardLevelComponent implements OnInit, AfterViewInit {
           },
         })).bringToFront();
 
-        var spaceDialog: any = this.dialog.open(AddSpaceComponent);
+        var spaceDialog: any = this.dialog.open(AddSpaceComponent,{
+          disableClose: true});
 
         spaceDialog.afterClosed().subscribe((dialogData: any) => {
 
@@ -382,8 +384,9 @@ export class OnBoardLevelComponent implements OnInit, AfterViewInit {
                 capacity: 0
               }]
             this.form.SpacesList = [...this.form.SpacesList, ...arr];
-
+            this.noEvents=false;
             this.drawTool.disable();
+            console.log(this.sampleGeojson, "during update level:::");
           } else {
             this.geometrylayer.removeGeometry(this.roomGeometry[0]);
           }
@@ -469,6 +472,16 @@ export class OnBoardLevelComponent implements OnInit, AfterViewInit {
     //a.click();
 
   }
+  private reloadImages() {
+    this.blobService.listImages(environment.sasToken).then((list) => {
+      if(list){
+        
+        this.toggleRightSideBar();
+        this.getLevelsByFacilityId(this.obtainedFaciltiyId)
+      }
+    });
+
+  }
   uploadFloorPlan() {
 
 
@@ -483,6 +496,7 @@ export class OnBoardLevelComponent implements OnInit, AfterViewInit {
       });
       this.form.FloorPlanImageUrl = `https://storagesmartroute27.blob.core.windows.net/filesupload/${this.obtainSiteName.replace(/\s+/g, '')}/${this.obtainedFaciltiyname.replace(/\s+/g, '')}/${this.form.levelName.replace(/\s+/g, '')}/${this.fileType}/${this.fileName}`;
       //this.addFacility(this.form)
+      //this.reloadImages()
     }
 
 
@@ -539,13 +553,15 @@ export class OnBoardLevelComponent implements OnInit, AfterViewInit {
     console.log(jsoIndex, 'inside delete space ')
     if (jsoIndex !== -1) {
       if (this.editing) {
-        let deletepop: any = this.dialog.open(DeleteDialogComponent);
+        let deletepop: any = this.dialog.open(DeleteDialogComponent,{
+          disableClose: true});
         deletepop.afterClosed().subscribe((dialogEvent: any) => {
           if (dialogEvent.event == 'Yes') {
             this.deleteSpaceFormLevel(this.sampleGeojson.features[jsoIndex].properties.SpaceId, jsoIndex);
             this.geometrylayer.removeGeometry(Geometries.find((geo) => geo.properties.name == this.selectedRoomName));
             this.geometrylayer.removeGeometry(Markers.find((marker) => marker.properties.name == this.selectedRoomName));
-        
+            this.noEvents=false;
+            this.showToolbar = false;
             !this.editing && this.form.SpacesList.length == 0 && this.sampleGeojson.features.length == 0 ? this.showToolbar = false : this.showToolbar = true;
           }
         })
@@ -691,10 +707,10 @@ export class OnBoardLevelComponent implements OnInit, AfterViewInit {
       this.uploadFloorPlan(), this.submitlevl()
     ) : (
       console.log(this.sampleGeojson, "during update level:::"),
-      await this.uploadGeojsonFle(JSON.stringify(this.sampleGeojson), this.selectedLevelData.levelName.replace(/\s+/g, '') + ".geojson", "text/plain")
-      , this.updateLevel());
+      await this.uploadGeojsonFle(JSON.stringify(this.sampleGeojson), this.form.levelName.replace(/\s+/g, '') + ".geojson", "text/plain")
+      , this.updateLevel())
 
-
+     // this.reloadImages()
   }
 
   updateLevel() {
@@ -719,10 +735,8 @@ export class OnBoardLevelComponent implements OnInit, AfterViewInit {
 
         console.log(this.form.SpacesList, "SPaces list inside update level")
         this.form.SpacesList.length > 0 ? this.submitSpaces(this.selectedLevelData) : (
-          this.form.SpacesList = [],
-          this.myForm.resetForm({}),
-          this.toggleRightSideBar(),
-          this.getLevelsByFacilityId(this.obtainedFaciltiyId)
+          
+          this.reloadImages()
         );
       }
     })
@@ -791,6 +805,7 @@ export class OnBoardLevelComponent implements OnInit, AfterViewInit {
         geo.addEventListener('click', (e: any) => {
           if (this.editing || this.NewLevel) {
             var markerDialog: any = this.dialog.open(EditMarkerTextComponent, {
+              disableClose:true,
               data: {
                 spaceName: e.target.properties.name,
                 spaceId: e.target.properties.SpaceId
@@ -809,6 +824,7 @@ export class OnBoardLevelComponent implements OnInit, AfterViewInit {
                 e.target.properties.SpaceName = dialogData.data.spaceName;
                 e.target.properties.name = dialogData.data.spaceName;
                 e.target.properties.SpaceId = dialogData.data.spaceId;
+                this.noEvents=false;
                 //console.log(currentspace,"Current After  Spaces After Updating Space name")
                 let jsoIndex: any = this.sampleGeojson.features.findIndex(obj => obj.properties.SpaceId === dialogData.data.spaceId);
                 if (jsoIndex !== -1) {

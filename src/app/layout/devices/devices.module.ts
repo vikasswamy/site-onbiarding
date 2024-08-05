@@ -7,13 +7,15 @@ import { AppMaterialModule } from 'src/app/material.module';
 import { FormsModule } from '@angular/forms';
 import { DeviceFloorPlanComponent } from './device-floor-plan/device-floor-plan.component';
 import { DeleteDEviceComponent } from './delete-device/delete-device.component';
+import { DeviceInfoComponent } from './device-info/device-info.component';
 
 
 @NgModule({
   declarations: [
     MapDevicesComponent,
     DeviceFloorPlanComponent,
-    DeleteDEviceComponent
+    DeleteDEviceComponent,
+    DeviceInfoComponent
   ],
   imports: [
     CommonModule,

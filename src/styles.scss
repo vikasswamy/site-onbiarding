@@ -44,6 +44,7 @@
 
   --mat-mdc-snack-bar-button-color: var(--white-color);
 }
+
 .mat-icon-button {
   text-decoration: none;
   color: var(--theme-color);
@@ -223,6 +224,7 @@ body.light-mode .video-bg:before {
 .header-menu {
   display: flex;
   align-items: center;
+  margin-left: 350px;
 }
 .header-menu a {
   padding: 20px 30px;
@@ -291,7 +293,7 @@ body.light-mode .video-bg:before {
   background-color: var(--search-bg);
   border-radius: 4px;
   font-family: var(--body-font);
-  font-size: 15px;
+ 
   font-weight: 500;
   padding: 0 20px 0 40px;
   box-shadow: 0 0 0 2px rgba(134, 140, 160, 0.02);
@@ -416,6 +418,14 @@ body.light-mode .video-bg:before {
   overflow: auto;
   flex-shrink: 0;
 }
+.master-side {
+  flex-basis: 240px;
+  max-height: 600px;
+  border-right: 1px solid var(--border-color);
+  padding: 26px;
+  overflow: auto;
+  flex-shrink: 0;
+}
 .darSideBar{
   width: 0px;
   transition: .40s;
@@ -441,7 +451,12 @@ body.light-mode .video-bg:before {
   flex-direction: row;
   white-space: nowrap;
 }
-.side-menu a {
+.masterside-menu{
+  display: flex;
+  flex-direction: column;
+  white-space: nowrap;
+}
+.masterside-menu a {
   text-decoration: none;
   color: var(--theme-color);
   display: flex;
@@ -452,11 +467,11 @@ body.light-mode .video-bg:before {
   border-radius: 6px;
   transition: 0.3s;
 }
-.side-menu a:hover {
+.masterside-menu a:hover {
   background-color: var(--hover-menu-bg);
 }
-.side-menu svg {
-  width: 16px;
+.masterside-menu mat-icon {
+  width: auto;
   margin-right: 8px;
 }
 
@@ -767,6 +782,33 @@ body.light-mode .video-bg:before {
   color: var(--button-inactive);
   border: 1px solid var(--button-inactive);
 }
+
+.toggleContainer {
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    width: fit-content;
+    border: 1px solid var(--bg-color-card);
+    border-radius: 20px;
+    font-family: var(--body-font);
+    font-size: 15px;
+    font-weight: 500;
+    box-shadow: 0 0 0 2px rgba(134, 140, 160, 0.02);
+    background: var(--search-bg);
+    font-weight: bold;
+    color: var(--theme-bg-color);
+    cursor: pointer;
+  }
+  .toggleContainer::before {
+    content: '';
+    position: absolute;
+    width: 50%;
+    height: 100%;
+    left: 0%;
+    border-radius:20px;
+    background: var(--background-color);
+    transition: all 0.3s;
+  }
 .status-button:not(.open):hover {
   color: #fff;
   border-color: #fff;
@@ -973,7 +1015,7 @@ body.light-mode .video-bg:before {
   .app-card-content-wrapper {
     display: flex;
     flex-direction: column;
-    background-image: url("https://www.transparenttextures.com/patterns/cubes.png"), linear-gradient(to right top, #cf4af3, #e73bd7, #f631bc, #fd31a2, #ff3a8b, #ff4b78, #ff5e68, #ff705c, #ff8c51, #ffaa49, #ffc848, #ffe652);
+    // background-image: url("https://www.transparenttextures.com/patterns/cubes.png");
     width: calc(25% - 20px);
     height: 180px;
     font-size: 16px;
@@ -1078,7 +1120,7 @@ body.light-mode .video-bg:before {
   right: 20px
 }
   .glass-card {
-    background-color: rgb(146 151 179 / 13%); /* Adjust opacity here */
+    background-color: var(--content-bg);/* Adjust opacity here */
     border: none; /* Remove border */
     transition: all 0.3s ease;
     align-items: center;
@@ -1086,8 +1128,8 @@ body.light-mode .video-bg:before {
 
   }
   .glass-card:hover {
-    background-color: rgba(16 18 27 / 40%); /* Adjust hover opacity */
-    transform: translateY(-5px); /* Optional: Add a slight lift on hover */
+    background-color: var(--theme-bg-color);/* Adjust hover opacity */
+   // transform: translateY(-5px); /* Optional: Add a slight lift on hover */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Optional: Add a subtle shadow */
   }
   .mat-mdc-menu-item .mat-icon-no-color, .mat-mdc-menu-submenu-icon {

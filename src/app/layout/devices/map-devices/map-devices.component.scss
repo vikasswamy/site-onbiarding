@@ -1,3 +1,51 @@
+.menu-button{
+  position: fixed;
+  display: flex;
+  bottom: 0.5rem;
+  right:0.5rem;
+}
+.label{
+  position: fixed;
+  left: 1.5rem;
+  left: auto;
+  height: 25px;
+  width: 100px;
+  line-height: 25px;
+  min-height: 25px;
+  vertical-align: top;
+  font-size: 12px;
+  padding: 0 0;
+  margin: 0;
+}
+
+.one{
+  bottom: 6rem;
+  animation: moveOne 0.2s;
+}
+.labelone{
+  bottom: 6.5rem;
+  animation: moveOneLabel 0.2s;
+}
+  
+.two{
+  bottom: 9.5rem;
+  animation: moveTwo 0.25s;
+}
+.labeltwo{
+  bottom: 5rem;
+  right: 2rem;
+  width: auto;
+  height: 50%;
+  display: inline-grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  /* 2 columns */
+  grid-auto-rows: 1fr;
+  /* equal rows */
+  vertical-align: top;
+  background: transparent;
+  animation: moveTwoLabel 0.25s;
+}
+
 .custom-button-group {
   display: flex;
 button{
@@ -78,6 +126,15 @@ right: 0;
 
 }
 
+.title{
+  color: gray;
+}
+.small{
+  color: gray;
+}
+.value{
+  color: rgb(9, 9, 9);
+}
 /* drag and drop css */
 .example-container {
   width: 400px;

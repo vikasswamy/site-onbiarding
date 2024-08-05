@@ -35,4 +35,13 @@ export class FacilityServiceService {
       catchError(this.handleError)
     );
   }
+  UpdateFacility(data:any){
+    return this.http.put(
+      this.apiBaseUrl + `/Facilities/updateFacility`,
+      data
+    ).pipe(
+      retry(1),
+      catchError(this.handleError)
+    );
+  }
 }

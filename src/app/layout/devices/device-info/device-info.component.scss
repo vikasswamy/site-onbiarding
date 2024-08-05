@@ -1,0 +1,168 @@
+.sidebarMenu{
+    background-color: transparent;
+    color: #fff;
+    width: auto;
+    height: 90vh;
+  }
+  
+  .title{
+    color: gray;
+  }
+  .small{
+    color: gray;
+  }
+  .value{
+    color: rgb(255, 255, 255);
+    line-height: auto; /* Default line height */
+  word-wrap: normal;
+  text-align: center;
+  }
+ 
+  .custom-input-image {
+    opacity: 0;
+    filter: alpha(opacity=0);
+    position: relative;
+    width: 44px;
+    display: none;
+  }
+  
+  .card{
+    background-color: rgba(0, 0, 0, 0.478);
+  }
+  .counter {
+    background-color:rgb(146 151 179 / 13%);
+    margin: 10px 5px;
+    min-width: 3.7rem;
+    color:#fff;
+    max-width:auto;
+    height:auto ;
+    display: block;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    border-radius: 5px;
+    cursor: pointer;
+}
+ .counter:hover {
+    background-color: rgba(16 18 27 / 40%); /* Adjust hover opacity */
+    transform: translateY(-5px); /* Optional: Add a slight lift on hover */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Optional: Add a subtle shadow */
+  }
+.count-title {
+    font-size: 20px;
+    font-weight: normal;
+    margin-top: 10px;
+    margin-bottom: 0;
+    text-align: center;
+}
+
+.count-text {
+    font-size: 12px;
+    font-weight: normal;
+    margin-top: 10px;
+    margin-bottom: 0;
+    text-align: center;
+}
+
+.fa-2x {
+    margin:  auto;
+    float: none;
+    display: table;
+    color: #4ad1e5;
+}
+
+  .genisSideBar{
+    width: auto;
+    transition: .40s;
+  }
+ 
+  @media screen and (max-width: 100px) {
+    .content{
+        display: none;
+    }
+    .left-side{
+      padding: 0px;
+    }
+    .side-wrapper{
+      display: none;
+    }
+  }
+  .counter img {
+    display: block;
+    width: auto;
+    height : auto;
+    height: 85px;
+    width: 60px;
+    border-radius: 5px;
+  }
+  .menuBreak
+    {
+        width: 210px;
+        height: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+   .upload-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 20px;
+        }
+        .upload-container > * {
+            margin-bottom: 10px;
+        }
+        .input-fields {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 20px;
+        }
+        .input-fields > * {
+            margin-bottom: 10px;
+        }
+  .nav li a{
+    color: #fff !important;
+    font-size: 14px;
+    
+  }
+ 
+  
+  .userFotoGenis{
+    width: 60px;
+    height: 60px;
+    border-radius: 38px;
+    font-size: 20px;
+    transition: .40s;
+  }
+  .userFotoDar{
+    width: 40px;
+    height: 40px;
+    border-radius: 40px;
+    font-size: 16px;
+    transition: .40s;
+  }
+  
+  .userNameGenis{
+    display: block;
+  }
+  .userNameDar{
+    display: none;
+  }
+  
+  .navLinkGenis{
+    display: inline-block;
+    visibility: visible;
+  }
+  .navLinkDar{
+    display: none;
+    visibility: hidden;
+  }
+  
+  .genisSideBarAlt{
+    width: 160px;
+  }
+  .darSideBarAlt{
+    width: 60px;
+  }
+  

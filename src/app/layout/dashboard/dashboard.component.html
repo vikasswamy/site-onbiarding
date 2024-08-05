@@ -2,56 +2,96 @@
    
     <div class="content-wrapper">
      <div class="content-wrapper-header">
-      <div class="apps-card ">
-        <div class="app-card-content-wrapper">
-         <span>
-          <mat-icon>search</mat-icon>
-          Locate Your Site
-         </span>
-         <div class="app-card__subtext">Seach for your Site with Location name and Drag marker to your Lite location </div>
-         <div class="app-card-buttons">
-          <button class="content-button status-button"  [routerLinkActive]="['router-link-active']" [routerLink]="['/add-site']">Get Started</button>
-          
-         </div>
+      
+      
+      
+      <!-- <img class="content-wrapper-img" src="https://assets.codepen.io/3364143/glass.png" alt=""> -->
+     </div>
+     <div class="content-section-title">
+      <div class="filter">
+        <div class="optimize_btn">
+          <h4>Site onboarding</h4>
         </div>
-        <div class="app-card-content-wrapper">
-         <span>
-          <mat-icon>add_location</mat-icon>
-          Add Facility
-         </span>
-         <div class="app-card__subtext">Add a Facility for selected site  </div>
-         <div class="app-card-buttons">
-          <button class="content-button status-button"  #menuTrigger="matMenuTrigger" [matMenuTriggerFor]="menu" >{{SelectedSite}} </button>
+        
+  
+      </div>
+    </div>
+     <div class="apps-card ">
+      <div class="app-card-content-wrapper">
+       <span>
+        <mat-icon>search</mat-icon>
+        Locate Your Site
+       </span>
+       <div class="app-card__subtext">Seach for your Site with Location name and Drag marker to your Lite location </div>
+       <div class="app-card-buttons">
+        <button class="content-button status-button"  [routerLinkActive]="['router-link-active']" [routerLink]="['/add-site']">Get Started</button>
+        
+       </div>
+      </div>
+      <div class="app-card-content-wrapper">
+       <span>
+        <mat-icon>add_location</mat-icon>
+        Add Facility
+       </span>
+       <div class="app-card__subtext">Add a Facility for selected site  </div>
+       <div class="app-card-buttons">
+        <button class="content-button status-button"  #menuTrigger="matMenuTrigger" [matMenuTriggerFor]="menu" >{{SelectedSite}} </button>
+        
+        <!-- <button mat-icon-button [mat-dialog-close]="'close'" [disabled]="!SelectedSite" (click)="goToAddLevel()" style="position: relative; border: none; color: #3a6df0;">
+         <mat-icon>arrow_right_alt</mat-icon></button> -->
+        
+         
+        <mat-menu  #menu="matMenu" class="mat-menu-dropdown">
+          <div *ngFor="let site of AllSites" class="">
+            <button mat-menu-item (click)="setSelectedSiteValue(site)" >
+              <span>{{site.siteName}}</span>
+            </button>
+          </div>
           
-          <!-- <button mat-icon-button [mat-dialog-close]="'close'" [disabled]="!SelectedSite" (click)="goToAddLevel()" style="position: relative; border: none; color: #3a6df0;">
-           <mat-icon>arrow_right_alt</mat-icon></button> -->
           
-           
-          <mat-menu  #menu="matMenu" class="mat-menu-dropdown">
-            <div *ngFor="let site of AllSites" class="">
-              <button mat-menu-item (click)="setSelectedSiteValue(site)" >
-                <span>{{site.siteName}}</span>
-              </button>
-            </div>
-            
-            
-          </mat-menu>
-         </div>
-        </div>
-        <div class="app-card-content-wrapper">
-         <span>
-          <mat-icon>layers</mat-icon>
-          Add Level
-         </span>
-         <div class="app-card__subtext">Add Level For selected Site and Facility</div>
-         <div class="app-card-buttons">
+        </mat-menu>
+       </div>
+      </div>
+      <div class="app-card-content-wrapper">
+       <span>
+        <mat-icon>layers</mat-icon>
+        Add Level
+       </span>
+       <div class="app-card__subtext">Add Level For selected Site and Facility</div>
+       <div class="app-card-buttons">
+        <span *ngFor="let item of navItems">
+          <!-- Handle branch node buttons here -->
+          <span  *ngIf="item.children && item.children.length > 0">
+            <button  class="content-button status-button" [matMenuTriggerFor]="menu.childMenu">
+              {{item.displayName}}
+            </button>
+            <app-menu-item  #menu [items]="item.children"></app-menu-item>
+          </span>
+          <!-- Leaf node buttons here -->
+          <span *ngIf="!item.children || item.children.length === 0">
+            <button mat-button color="primary" >
+              {{item.displayName}}
+            </button>
+          </span>
+        </span>
+        <!-- <button class="content-button status-button">get Started</button>
+        <div class="menu"></div> -->
+       </div>
+      </div>
+      <div class="app-card-content-wrapper">
+        <span>
+          <mat-icon>devices_other</mat-icon>
+         Device Mapping
+        </span>
+        <div class="app-card__subtext">Onboard devices for lavel and spaces</div>
+        <div class="app-card-buttons">
           <span *ngFor="let item of navItems">
             <!-- Handle branch node buttons here -->
             <span  *ngIf="item.children && item.children.length > 0">
               <button  class="content-button status-button" [matMenuTriggerFor]="menu.childMenu">
                 {{item.displayName}}
               </button>
-              <app-menu-item  #menu [items]="item.children"></app-menu-item>
+              <app-device-menu  #menu [items]="item.children"></app-device-menu>
             </span>
             <!-- Leaf node buttons here -->
             <span *ngIf="!item.children || item.children.length === 0">
@@ -63,38 +103,8 @@
           <!-- <button class="content-button status-button">get Started</button>
           <div class="menu"></div> -->
          </div>
-        </div>
-        <div class="app-card-content-wrapper">
-          <span>
-            <mat-icon>devices_other</mat-icon>
-           Device Mapping
-          </span>
-          <div class="app-card__subtext">Onboard devices for lavel and spaces</div>
-          <div class="app-card-buttons">
-            <span *ngFor="let item of navItems">
-              <!-- Handle branch node buttons here -->
-              <span  *ngIf="item.children && item.children.length > 0">
-                <button  class="content-button status-button" [matMenuTriggerFor]="menu.childMenu">
-                  {{item.displayName}}
-                </button>
-                <app-device-menu  #menu [items]="item.children"></app-device-menu>
-              </span>
-              <!-- Leaf node buttons here -->
-              <span *ngIf="!item.children || item.children.length === 0">
-                <button mat-button color="primary" >
-                  {{item.displayName}}
-                </button>
-              </span>
-            </span>
-            <!-- <button class="content-button status-button">get Started</button>
-            <div class="menu"></div> -->
-           </div>
-         </div>
        </div>
-      
-      <!-- <img class="content-wrapper-img" src="https://assets.codepen.io/3364143/glass.png" alt=""> -->
      </div>
-    
      <div class="content-section">
       <div class="content-section-title">
         <div class="filter">
@@ -110,7 +120,7 @@
         </div>
         <div class="filter">
           <div class="optimize_btn">
-            <button class="content-button status-button" (click)="AddDevice()">Add / Onboard a Device Detaails</button>
+            <button class="content-button status-button" (click)="AddDevice()">Add a Device</button>
 
             
           </div>
@@ -207,7 +217,7 @@
       <div class="content-section-title">
         <div class="filter">
           <div class="optimize_btn">
-            <h4>All Sites Details </h4>
+            <h4>All Sites </h4>
           </div>
           
     
@@ -231,7 +241,7 @@
                 </div>
                 
                 <div class="learn-btn">
-                  <button class="content-button status-button" type="button">Know more</button>
+                  <button class="content-button status-button" type="button" (click)="GoToViewDetails(i)">Know more</button>
                   
                 </div>
               

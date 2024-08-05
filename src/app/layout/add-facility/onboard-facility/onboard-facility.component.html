@@ -54,10 +54,10 @@
       <div class="d-flex justify-content-between mb-2 align-items-center">
             <div class="content-section-title">
               {{editing? 'Drag and Drop Marker to update Facility Location & Edit Facility Name':NewFacility?'Provide your Facilty Location and Facility outline form Map':'View Faciliy '}}</div>
-            <button *ngIf="viewing" mat-fab extended (click)="backtoAllFacilities()" >
-              <mat-icon>dashboard</mat-icon>
-              Back to All Floors
-            </button>
+           
+            <div *ngIf="viewing" class="custom-button-group">
+              <button class='content-button status-button' (click)="backtoAllFacilities()" >Back to All Facilities</button>
+            </div>
       </div>
         <div class="container-fluid " >
             <div class="row glass-row">

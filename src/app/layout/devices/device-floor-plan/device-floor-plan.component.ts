@@ -12,9 +12,9 @@ import * as turf from '@turf/turf'
 import{ui}from 'maptalks';
 import { MatSnackBar } from '@angular/material/snack-bar';
 export interface CustomHtmlOptions extends ui.UIMarkerOptions{
-  id: any;
-  type:any;
-  name:any;
+  deviceId: any;
+  spaceId:any;
+  showdelete:any;
 }
 //import * as image from ''
 @Component({
@@ -55,6 +55,26 @@ export class DeviceFloorPlanComponent implements OnInit, OnChanges {
     })
     this.unMappedDevices=[];
     this.dashboardService.UnmappedDevices.subscribe((unmappeDevicesData:any)=>{
+      unmappeDevicesData.forEach((device:any) => {
+     
+      if(device.deviceType == 'Smart Display' ){
+        device.src='../../../../assets/images/smart-display.png'
+      }
+      else if(device.deviceType == 'Work Validation Scanner'){
+        device.isAdvance? device.src='../../../../assets/images/scan-advance.png':device.src='../../../../assets/images/barcode-scanner-advance.png'
+  
+      }
+      else if(device.deviceType == 'Occupancy Sensor'){
+        device.isAdvance? device.src='../../../../assets/images/ocp-advance.png':device.src='../../../../assets/images/occp-basic.png'
+  
+      }
+      else if(device.deviceType == 'People Counter'){
+         device.src='../../../../assets/images/people-enter.png'
+      }
+        
+      });
+      console.log(unmappeDevicesData)
+      
       this.unMappedDevices=unmappeDevicesData;
     })
   }
@@ -332,59 +352,190 @@ export class DeviceFloorPlanComponent implements OnInit, OnChanges {
 
 
  async createDraggaleMarker(SpaceId,deviceId:any,deviceName:any,isAdvance:any,point:any){
+    console.log(isAdvance,"::::isAdvance::::::");
+    console.log(deviceName,'::deviceName:::');
+
     var src = ''
     if(deviceName == 'Smart Display' ){
-      src='../../../../assets/Smart_Display.png'
+      src='../../../../assets/images/smart-display.png'
     }
     else if(deviceName == 'Work Validation Scanner'){
-      isAdvance? src='../../../../assets/marker1.png':src='../../../../assets/marker3.png'
+      isAdvance? src='../../../../assets/images/scan-advance.png':src='../../../../assets/images/barcode-scanner-advance.png'
 
     }
     else if(deviceName == 'Occupancy Sensor'){
-      isAdvance? src='../../../../assets/marker4.png':src='../../../../assets/marker5.png'
+      isAdvance? src='../../../../assets/images/ocp-advance.png':src='../../../../assets/images/occp-basic.png'
 
     }
     else if(deviceName == 'People Counter'){
-       src='../../../../assets/marker2.png'
+       src='../../../../assets/images/people-enter.png'
     }
-    this.mapMarker = new maptalks.Marker(
-      point,
-      {
-        'draggable':true,
-        
-      'symbol' : {
-        'markerFile'   : src,
-        'markerWidth'  : 28,
-        'markerHeight' : 40,
-        'markerDx'     : 0,
-        'markerDy'     : 0,
-        'markerOpacity': 3
-      },
-      'properties':{
+
+
+    console.log(src,":::src:::");
+
+    let customoptions:CustomHtmlOptions= {
+      'draggable': true,
+      'single': false,
         'deviceId':deviceId,
         'spaceId':SpaceId,
         'showdelete':this.showdelete,
-      }
+      'content': `
+      <style>   
+.pin {
+width: 30px;
+height: 30px;
+border-radius: 50% 50% 50% 0;
+background: gray;
+position: absolute;
+transform: rotate(45deg);
+left: 50%;
+top: 50%;
+margin: -20px 0 0 -20px;
+img{
+transform: rotate(45deg);
+width: 30px;
+height: 30px;
+border-radius: 50% 50% 50% 0;
+}
+}
+
+
+.bounce {
+animation-name: bounce;
+animation-fill-mode: both;
+animation-duration: 1s;
+}
+
+.pulse {
+background: #d6d4d4;
+border-radius: 50%;
+height: 14px;
+width: 14px;
+position: absolute;
+left: 50%;
+top: 50%;
+margin: 11px 0px 0px -12px;
+transform: rotateX(55deg);
+z-index: -2;
+}
+.pulse:after {
+content: "";
+border-radius: 50%;
+height: 40px;
+width: 40px;
+position: absolute;
+margin: -13px 0 0 -13px;
+animation: pulsate 1s ease-out;
+animation-iteration-count: infinite;
+opacity: 0;
+box-shadow: 0 0 1px 2px #00cae9;
+animation-delay: 1.1s;
+}
+
+@keyframes pulsate {
+0% {
+transform: scale(0.1, 0.1);
+opacity: 0;
+}
+
+50% {
+opacity: 1;
+}
+
+100% {
+transform: scale(1.2, 1.2);
+opacity: 0;
+}
+}
+
+@keyframes bounce {
+0% {
+opacity: 0;
+transform: translateY(-2000px) rotate(-45deg);
+}
+
+60% {
+opacity: 1;
+transform: translateY(30px) rotate(-45deg);
+}
+
+80% {
+transform: translateY(-10px) rotate(-45deg);
+}
+
+100% {
+transform: translateY(0) rotate(-45deg);
+}
+}
+      </style>
+      <div class='pin bounce'><img src ='${src}'></div>
+<div class='pulse'></div>
+     
+      `,
     }
-    ).addEventListener('contextmenu', (e: any) => {
-      // this.selectedRoomName = e.target.properties.SpaceName
-      // e.target.startEdit();
-      e.target.properties.showdelete=!this.showdelete;
-     this.showToolbar.emit( e.target.properties.showdelete);
-     this.showdelete= e.target.properties.showdelete;
+    new ui.UIMarker(point, customoptions).setOptions({
+       'deviceId':deviceId,
+        'spaceId':SpaceId,
+        'showdelete':this.showdelete,
+    }).addEventListener('contextmenu', (e: any) => {
+     
+      e.target.showdelete=!this.showdelete;
+     this.showToolbar.emit( e.target.showdelete);
+     this.showdelete= e.target.showdelete;
     }).addEventListener('mouseenter', (e: any) => {
-      e.target.properties.showdelete=false;
+      e.target.showdelete=false;
       this.showdelete= false;
       this.showToolbar.emit( false);
-    }).addTo(this.geometrylayer).bringToFront().addEventListener('dragend',(e:any)=>{
-      //console.log(e,"afterdraging");
-      if((this.hoverdSpaceId !== null && this.hoverdSpaceId !=undefined) && e.target.properties.spaceId !== this.hoverdSpaceId){
-       let targetedDEvice:any= this.MappedDevices.find((obj:any)=>obj.deviceId == e.target.properties.deviceId);
-        e.target.spaceId=this.hoverdSpaceId;
+    }).addEventListener('dragend',(e:any)=>{
+      console.log(e.target.options,"afterdraging");
+      if((this.hoverdSpaceId !== null && this.hoverdSpaceId !=undefined) && e.target.options.spaceId !== this.hoverdSpaceId){
+       let targetedDEvice:any= this.MappedDevices.find((obj:any)=>obj.deviceId == e.target.options.deviceId);
+       console.log(targetedDEvice)
+        e.target.options.spaceId=this.hoverdSpaceId;
        targetedDEvice.Space_Id=this.hoverdSpaceId;
        this.updateDevice(targetedDEvice);
       }
-    });
+    }).addTo(this.map);
+    customoptions=null
+    // this.mapMarker = new maptalks.Marker(
+    //   point,
+    //   {
+    //     'draggable':true,
+        
+    //   'symbol' : {
+    //     'markerFile'   : src,
+    //     'markerWidth'  : 28,
+    //     'markerHeight' : 40,
+    //     'markerDx'     : 0,
+    //     'markerDy'     : 0,
+    //     'markerOpacity': 3
+    //   },
+    //   'properties':{
+    //     'deviceId':deviceId,
+    //     'spaceId':SpaceId,
+    //     'showdelete':this.showdelete,
+    //   }
+    // }
+    // ).addEventListener('contextmenu', (e: any) => {
+    //   // this.selectedRoomName = e.target.properties.SpaceName
+    //   // e.target.startEdit();
+    //   e.target.properties.showdelete=!this.showdelete;
+    //  this.showToolbar.emit( e.target.properties.showdelete);
+    //  this.showdelete= e.target.properties.showdelete;
+    // }).addEventListener('mouseenter', (e: any) => {
+    //   e.target.properties.showdelete=false;
+    //   this.showdelete= false;
+    //   this.showToolbar.emit( false);
+    // }).addTo(this.geometrylayer).bringToFront().addEventListener('dragend',(e:any)=>{
+    //   //console.log(e,"afterdraging");
+    //   if((this.hoverdSpaceId !== null && this.hoverdSpaceId !=undefined) && e.target.properties.spaceId !== this.hoverdSpaceId){
+    //    let targetedDEvice:any= this.MappedDevices.find((obj:any)=>obj.deviceId == e.target.properties.deviceId);
+    //     e.target.spaceId=this.hoverdSpaceId;
+    //    targetedDEvice.Space_Id=this.hoverdSpaceId;
+    //    this.updateDevice(targetedDEvice);
+    //   }
+    // });
 
   }
   
@@ -449,7 +600,9 @@ export class DeviceFloorPlanComponent implements OnInit, OnChanges {
         event.previousIndex-1,
         event.currentIndex
       );
-     this.updateDevice(aboutToAssignObj)
+      console.log(event.previousContainer,"Drag drop from UnAssigned")
+     this.updateDevice(aboutToAssignObj);
+     //this.dashboardService.UnmappedDevices.next(event.previousContainer);
     }else{
       moveItemInArray(
         event.container.data,

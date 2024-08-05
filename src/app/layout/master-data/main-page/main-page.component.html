@@ -1,0 +1,27 @@
+
+<div class="wrapper">
+    
+    <app-masterdata-sidenav  [clicked]="isClicked"   ></app-masterdata-sidenav>
+
+
+                <div class="main-container">
+                            
+            <mat-icon style="margin-right:10px;position: absolute; top: 50%; border: none;border-color:transparent;  color: #fff;" (click)="toggleMenu()" > 
+                
+                {{ isClicked ? "keyboard_arrow_right" : "keyboard_arrow_left" }}
+        
+        </mat-icon>
+                    <div style="margin-left: 15px;" class="container-wrapper">
+                       
+                                <div class="content-section-title d-flex">
+                                    <p>View Site Master Data</p>
+                                </div>
+                                <div class='container-fluid'  >
+                                <router-outlet></router-outlet>
+                            </div>
+                               
+                        
+
+                    </div>
+                </div>
+</div>
