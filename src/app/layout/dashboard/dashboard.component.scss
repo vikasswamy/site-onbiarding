@@ -19,7 +19,7 @@
 }
 
 .basic-container {
-    padding: 64px 64px 400px 64px;
+   padding: 64px 64px 400px 64px;
   }
   .version-info {
     font-size: 8pt;
@@ -63,6 +63,7 @@
     display: flex;
     position: relative;
     justify-content: center;
+    align-items: center;
   }
   
   .Crl-cards {
@@ -112,33 +113,84 @@
     margin-bottom: 5px;
   }
   
-  .Crl-card .social-links a {
-    color: white;
-    text-decoration: none;
-    padding: 0.5rem;
-  }
+  // .Crl-card .social-links a {
+  //   color: white;
+  //   text-decoration: none;
+  //   padding: 0.5rem;
+  // }
   
-  .Crl-card .social-links #icon {
-    width: 1.2rem;
-    transition: transform 0.3s ease-in-out;
-  }
+  // .Crl-card .social-links #icon {
+  //   width: 1.2rem;
+  //   transition: transform 0.3s ease-in-out;
+  // }
   
-  .social-links #icon:hover {
-    transform: translatey(-5px);
-  }
+  // .social-links #icon:hover {
+  //   transform: translatey(-5px);
+  // }
+  // .card .learn-btn {
+  //   display: flex;
+  //   justify-content: space-between;
+  // }
   
-  .card .learn-btn button {
-    background: var(--btn-color);
-    padding: 0.7rem 2.5rem;
-    font-size: 15px;
-    color: var(--text-primary);
-    border-radius: 8px;
-    border: none;
-    cursor: pointer;
-    font-weight: 600;
-    letter-spacing: 1px;
-    margin-top: 0.2rem;
+  // .card .learn-btn button {
+  //   background: none;
+  //   padding: 0.7rem 1rem;
+  //   font-size: 15px;
+  //   color: black;
+  //   border-radius: 5px;
+  //   border: none;
+  //   cursor: pointer;
+  //   font-weight: 600;
+  //   letter-spacing: 1px;
+  //   // margin-top: 0.2rem;
+  //   margin-right: 0.5rem;
+  //   display: flex;
+  //   align-items: center;
+  //   justify-content: space-between;
+  //   flex-wrap: nowrap;
+  //   gap: 0.5rem;
+  //   height: 30px;
+  //   margin-trim: 0px;
+  //   text-align: center;
+  // }
+
+  // .material.icons {
+  //   font-size: 24px;
+  // }
+
+  // .card .learn-btn {
+  //     display: flex;
+  //     justify-content: space-between;
+  //     margin-top: 20px;
+  //     gap: 30px;
+  //     border: none;
+  //     border-radius: 10px;
+  //     padding: 5px 10px;
+  //     position: absolute;
+  //     font-size: 12px;
+  //     width: 50px;
+  // }
+
+  .learn-btn .content-button {
+    width:45px;
+    height:35px;
+    padding:6px;
+    font-size: 25px;
+    gap: 30px;
+    background-color: var(--content-bg);
   }
+
+  // button[mat-mini-fab] {
+  //   background-color: #0072bc;
+  //   color: #fff;
+  // }
+
+  // buton[mat-mini-fab]:hover {
+  //   background-color: #e0e0e0;
+  //   // box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.2);
+  //   // transform: translate(-2px);
+  // }
+
   .no-right-margin {
     margin-right: 0px;
   }
@@ -163,6 +215,7 @@
     align-items: center;
     justify-content: center;
     transform: translateY(-50%);
+    font-size: 30px;
   }
   
   .left.disabled, .right.disabled {
