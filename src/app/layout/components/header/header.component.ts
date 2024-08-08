@@ -17,7 +17,7 @@ export class HeaderComponent implements OnInit {
         this.router.navigate(['/dashboard']);
     }
     ngOnInit() {
-
+        this.viewEvent.emit(true)
     }
     checkValue(event:any){
         console.log(event);
