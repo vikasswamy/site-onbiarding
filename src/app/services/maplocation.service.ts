@@ -12,8 +12,9 @@ export class MaplocationService {
   public falicityGridData = new BehaviorSubject <any>([]);
   facilityDataGrid = this.falicityGridData.asObservable();
   UnmappedDevices:BehaviorSubject<any> = new BehaviorSubject([]);
-
-  
+  public vikas:any
+  public manju:any
+  public params = new BehaviorSubject <any>([]);
   private siteparams = new BehaviorSubject <any>([]);
   addSiteData = this.siteparams.asObservable();
 
@@ -28,7 +29,9 @@ export class MaplocationService {
   addlevelData = this.levelParams.asObservable();
   private polygondata = new BehaviorSubject <any>([]);
   polygongeojson = this.polygondata.asObservable();
+
   constructor(private http: HttpClient) { }
+
   public readonly api = this.load();
 
   private load(): Promise<Maps> {
@@ -104,6 +107,14 @@ export class MaplocationService {
   getAlldDevice(){
     return this.http.get(
       environment.apiBaseUrl + `/Devices`
+    ).pipe(
+      retry(1),
+      catchError(this.handleError)
+    );
+  }
+  getFacilitsbySiteId(id:any){
+    return this.http.get(
+      environment.apiBaseUrl + `/bySiteId/${id}`
     ).pipe(
       retry(1),
       catchError(this.handleError)
