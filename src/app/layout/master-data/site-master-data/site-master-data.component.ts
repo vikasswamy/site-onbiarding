@@ -1,21 +1,14 @@
-// import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource, MatTable } from '@angular/material/table';
-import {
-  Component,
-  ViewChild,
-  ViewChildren,
-  QueryList,
-  ChangeDetectorRef
-} from '@angular/core';
-
 
 @Component({
   selector: 'app-site-master-data',
   templateUrl: './site-master-data.component.html',
   styleUrls: ['./site-master-data.component.scss']
 })
-export class SiteMasterDataComponent  {
+export class SiteMasterDataComponent implements OnInit {
+ 
   @ViewChild('outerSort', { static: true }) sort: MatSort;
   @ViewChildren('innerSort') innerSort: QueryList<MatSort>;
   @ViewChildren('innerTables') innerTables: QueryList<MatTable<Address>>;
@@ -92,8 +85,9 @@ export class SiteMasterDataComponent  {
 
     //console.log(this.expandedElements);
   }
-}
 
+
+}
 export interface User {
   name: string;
   email: string;
