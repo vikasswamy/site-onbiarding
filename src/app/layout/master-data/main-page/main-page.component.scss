@@ -1,0 +1,37 @@
+// 
+.container{
+    display:flex;
+    justify-content: center;
+}
+
+
+.header-menu select{
+    padding: 8px 24px;
+    border: 1px solid var(--content-bg);
+    border-radius:4px;
+    font-size: 16px;
+    background-color: var(--content-bg);
+
+    margin-left: -100px;
+    margin-right: 270px;
+    font-weight: bold;
+    color: #fff;
+    // text-align: center;
+    margin-top: -36px;
+    margin-bottom: 10px;
+}
+
+.header-menu select option {
+    padding:8px;
+    background-color: var(--content-bg);
+    color: #fff;
+}
+
+.header-menu select::after {
+    content: "\25BC";
+    position: absolute;
+    top:50%;
+    right: 12px;
+    transform: translateY(-50%);
+    pointer-events: none;
+}
