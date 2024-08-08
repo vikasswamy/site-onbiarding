@@ -19,10 +19,15 @@
                               
                                 <div class="header-menu">
 
-                                    <select>
-                                        <option disabled selected>please select facility</option>
-                                        <option>facility 1</option>
-                                        <option>facility 2</option>
+                                    <select
+                                    placeholde="Select Faciliy"
+                                    #Level="ngModel"
+                                    [(ngModel)]="selectedfacility"
+                                    (change)='onOptionsSelected(Level.value)'
+                                    >
+                                        <option value="All">All facility</option>
+                                        <option *ngFor="let objets of facilitiesData"  [value]="objets.facilityId">{{objets.facilityName}}</option>
+                                        
                                     </select>
 
 

@@ -14,6 +14,7 @@ import { InsigtsComponent } from './insigts/insigts.component';
 import { ServicingComponent } from './servicing/servicing.component';
 import { PmComponentHomeComponent } from './pm-component-home/pm-component-home.component';
 import { PMSecondComponentComponent } from './pmsecond-component/pmsecond-component.component';
+import { FormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -33,7 +34,8 @@ import { PMSecondComponentComponent } from './pmsecond-component/pmsecond-compon
   imports: [
     CommonModule,
     MasterDataRoutingModule,
-    AppMaterialModule
+    AppMaterialModule,
+    FormsModule
   ]
 })
 export class MasterDataModule { }

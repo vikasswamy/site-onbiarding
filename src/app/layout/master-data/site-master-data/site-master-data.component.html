@@ -5,9 +5,9 @@
         
                 <div class="card-body" style=" width: 100%;
                  height: calc(34rem)">
-                   <table mat-table [dataSource]="data" multiTemplateDataRows matSort>
+                   <table mat-table [dataSource]="data" multiTemplateDataRows matSort class="mat-elevation-z8">
                     <ng-container [matColumnDef]="column" *ngFor="let column of columnsToDisplay">
-                        <th mat-header-cell *matHeaderCellDef> {{column}} </th>
+                        <th mat-header-cell *matHeaderCellDef class="column-name"> {{column}} </th>
                         <td mat-cell *matCellDef="let element"> {{element[column]}} </td>
                     </ng-container>
                 

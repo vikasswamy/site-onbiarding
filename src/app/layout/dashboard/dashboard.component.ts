@@ -11,9 +11,11 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatIcon } from '@angular/material/icon';
 import { DeleteDeviceDialogComponent } from './delete-device-dialog/delete-device-dialog.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
+
 export interface PeriodicElement {
  "DeviceId":string,  "Device Type":string, "Device Source Id":string, "Basic": string, "Advanced" :string
  }
+ 
 @Component({
     selector: 'app-dashboard',
     templateUrl: './dashboard.component.html',

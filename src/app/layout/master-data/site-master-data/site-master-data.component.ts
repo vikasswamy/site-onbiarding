@@ -1,6 +1,8 @@
 import { ChangeDetectorRef, Component, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource, MatTable } from '@angular/material/table';
+import { ActivatedRoute } from '@angular/router';
+import { MaplocationService } from 'src/app/services/maplocation.service';
 
 @Component({
   selector: 'app-site-master-data',
@@ -14,7 +16,7 @@ export class SiteMasterDataComponent implements OnInit {
   @ViewChildren('innerTables') innerTables: QueryList<MatTable<Address>>;
 
   data: User[] = USERS;
-
+  obtainedSiteId:any;
   dataSource: MatTableDataSource<User>;
   usersData: User[] = [];
   columnsToDisplay = ['name', 'email', 'phone'];
@@ -23,7 +25,15 @@ export class SiteMasterDataComponent implements OnInit {
   expandedElement: User | null;
   expandedElements: any[] = [];
 
-  constructor(private cd: ChangeDetectorRef) {}
+  constructor(private cd: ChangeDetectorRef,private mapService:MaplocationService, private router: ActivatedRoute) {
+    
+    this.router.queryParams.subscribe((params: any) => {
+      this.obtainedSiteId = params.siteId;
+      this.mapService.manju=params.siteId;
+      this.mapService.params.next(params);
+    });
+    console.log(this.obtainedSiteId,"::::Site id from params::::");
+  }
 
   ngOnInit() {
     USERS.forEach(user => {
@@ -42,7 +52,10 @@ export class SiteMasterDataComponent implements OnInit {
     });
     this.dataSource = new MatTableDataSource(this.usersData);
     this.dataSource.sort = this.sort;
+    this.mapService.vikas='my name is vikas';
   }
+
+
 
   applyFilter(filterValue: string) {
     this.innerTables.forEach(
