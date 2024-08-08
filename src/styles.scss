@@ -287,7 +287,7 @@ body.light-mode .video-bg:before {
   z-index: 10000;
 }
 #drvice-level-select{
-  width: 100%;
+  width: 100px;
   height: 100%;
   border: none;
   background-color: var(--search-bg);
@@ -295,12 +295,15 @@ body.light-mode .video-bg:before {
   font-family: var(--body-font);
  
   font-weight: 500;
-  padding: 0 20px 0 40px;
+  padding: 0 20px 0 17px;
   box-shadow: 0 0 0 2px rgba(134, 140, 160, 0.02);
   background-size: 14px;
   background-repeat: no-repeat;
   background-position: 16px 48%;
   color: var(--theme-color);
+  text-align: center;
+  font-size: 16px;
+  
 }
 .search-bar input {
   width: 100%;
