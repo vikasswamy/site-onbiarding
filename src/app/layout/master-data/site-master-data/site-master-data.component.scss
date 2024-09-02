@@ -1,26 +1,40 @@
 table {
     width: 100%;
+    background-color: var(--content-bg);
+    // color:azure
+    height:10px;
+    
   }
   
   tr.example-detail-row {
-    height: 0;
+    height: 0px;
   }
   
   tr.example-element-row:not(.example-expanded-row):hover {
-    background: #777;
+    background: var(--bg-color);
   }
   
   tr.example-element-row:not(.example-expanded-row):active {
-    background: #efefef;
+    background: var(--theme-bg-color);
   }
   
   .example-element-row td {
     border-bottom-width: 0;
+    color:azure;
+    font-weight: lighter;
   }
+
+  .example-detail-row td {
+    border-bottom-width: 0;
+    color:azure;
+    font-weight: lighter;
+  }
+
   
   .example-element-detail {
     overflow: hidden;
     display: flex;
+    
   }
   
   .example-element-diagram {
@@ -40,6 +54,7 @@ table {
   
   .example-element-description {
     padding: 16px;
+    
   }
   
   .example-element-description-attribution {
@@ -48,10 +63,14 @@ table {
   
   .inner-table {
     width: 100%;
+    margin-top: 15px;
   }
   
   .inner-table mat-form-field {
     margin-top: 15px;
     width: 100%;
+    
+
   }
+  
   

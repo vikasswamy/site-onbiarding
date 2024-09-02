@@ -12,8 +12,27 @@ export class MaplocationService {
   public falicityGridData = new BehaviorSubject <any>([]);
   facilityDataGrid = this.falicityGridData.asObservable();
   UnmappedDevices:BehaviorSubject<any> = new BehaviorSubject([]);
+  gridData:BehaviorSubject<any> = new BehaviorSubject([]);
   public vikas:any
   public manju:any
+
+  public facilityselected = new BehaviorSubject <any>([]);
+  facilityselecteddata = this.facilityselected.asObservable();
+
+    setFacilitySelected(Facilityvalue: any) {
+      this.facilityselected.next(Facilityvalue);
+    }
+
+  public levelselected = new BehaviorSubject <any>([]);
+  levelselecteddata = this.levelselected.asObservable();
+
+    setlevelselected(levelvalue : any) {
+      console.log(levelvalue,"::selectrer level value:::")
+      this.levelselected.next(levelvalue);
+    }
+
+
+  
   public params = new BehaviorSubject <any>([]);
   private siteparams = new BehaviorSubject <any>([]);
   addSiteData = this.siteparams.asObservable();
@@ -112,9 +131,33 @@ export class MaplocationService {
       catchError(this.handleError)
     );
   }
+  getAlldfacilities(){
+    return this.http.get(
+      environment.apiBaseUrl + `/Facilities`
+    ).pipe(
+      retry(1),
+      catchError(this.handleError)
+    );
+  }
   getFacilitsbySiteId(id:any){
     return this.http.get(
       environment.apiBaseUrl + `/bySiteId/${id}`
+    ).pipe(
+      retry(1),
+      catchError(this.handleError)
+    );
+  }
+  getLevelsbyFacilityId(id:any){
+    return this.http.get(
+      environment.apiBaseUrl + `/Levels/byFacility/${id}`
+    ).pipe(
+      retry(1),
+      catchError(this.handleError)
+    );
+  }
+  getFacilitiesGridDatabySiteId(id:any){
+    return this.http.get(
+      environment.apiBaseUrl + `/Facilities/gridDatabySiteId/${id}`
     ).pipe(
       retry(1),
       catchError(this.handleError)

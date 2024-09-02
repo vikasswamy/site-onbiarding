@@ -20,21 +20,23 @@
                                 <div class="header-menu">
 
                                     <select
-                                    placeholde="Select Faciliy"
-                                    #Level="ngModel"
+                                    placeholder="Select Facility"
+                                    #facility="ngModel"
                                     [(ngModel)]="selectedfacility"
-                                    (change)='onOptionsSelected(Level.value)'
+                                    (change)='onfacilitySelected(facility.value)'
                                     >
                                         <option value="All">All facility</option>
                                         <option *ngFor="let objets of facilitiesData"  [value]="objets.facilityId">{{objets.facilityName}}</option>
                                         
                                     </select>
-
-
-                                    <select>
-                                        <option disabled selected>please select level</option>
-                                        <option>level 1</option>
-                                        <option>level 2</option>
+                                    <select
+                                    placeholder="Select Level"
+                                    #Level="ngModel"
+                                    [(ngModel)]="selectedLevel"
+                                    (change)='onlevelselected(Level.value)'
+                                    >
+                                            <option value="All">All Levels</option>
+                                            <option *ngFor="let objets of LevelsData"  [value]="objets.levelId">{{objets.levelName}}</option>
                                     </select>
                                 </div> 
                                 
