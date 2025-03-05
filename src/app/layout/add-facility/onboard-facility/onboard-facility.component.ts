@@ -638,18 +638,18 @@ ngAfterViewInit(): void {
       `
     };
 
-    this.FacilityMarker= new ui.UIMarker(this.selectedFacilityData.facilitylocation.coordinates, customoptions).addTo(this.map).addEventListener('dragend',(e:any)=>{
+    this.FacilityMarker= new ui.UIMarker(JSON.parse(this.selectedFacilityData.facilitylocation).coordinates, customoptions).addTo(this.map).addEventListener('dragend',(e:any)=>{
       console.log(e,"afterdraging");
       const lngLat = e.coordinate;
       this.form.lan=lngLat.x;
       this.form.lat=lngLat.y;
       this.form.siteId=this.obtainedSiteId;
     });
-    this.map.setCenterAndZoom(this.selectedFacilityData.facilitylocation.coordinates,18);
-    this.form.lan=this.selectedFacilityData.facilitylocation.coordinates[0];
-    this.form.lat=this.selectedFacilityData.facilitylocation.coordinates[1];
-    this.form.facilityLayout=JSON.stringify(this.selectedFacilityData.geometry);
-    this.createFilledpolygons(this.selectedFacilityData.geometry);
+    this.map.setCenterAndZoom(JSON.parse(this.selectedFacilityData.facilitylocation).coordinates,18);
+    this.form.lan=JSON.parse(this.selectedFacilityData.facilitylocation).coordinates[0];
+    this.form.lat=JSON.parse(this.selectedFacilityData.facilitylocation).coordinates[1];
+    this.form.facilityLayout=this.selectedFacilityData.geometry;
+    this.createFilledpolygons(JSON.parse(this.selectedFacilityData.geometry));
   }
   createFilledpolygons(geojsonFile: any) {
     console.log(geojsonFile,"URL::::")
@@ -759,15 +759,15 @@ ngAfterViewInit(): void {
         </div>
         <div class="info">
           <div class="title">FacilityName: ${this.selectedFacilityData.facilityName}</div>
-          <div class="contant">📍<span>${this.selectedFacilityData.facilitylocation.coordinates } </span></div>
+          <div class="contant">📍<span>${JSON.parse(this.selectedFacilityData.facilitylocation).coordinates} </span></div>
         </div>
       </div>
     </div>
      
       `,
     }
-    this.FacilityMarker= new ui.UIMarker(this.selectedFacilityData.facilitylocation.coordinates, customoptions).addTo(this.map)
-    this.map.setCenterAndZoom(this.selectedFacilityData.facilitylocation.coordinates,20);
+    this.FacilityMarker= new ui.UIMarker(JSON.parse(this.selectedFacilityData.facilitylocation).coordinates, customoptions).addTo(this.map)
+    this.map.setCenterAndZoom(JSON.parse(this.selectedFacilityData.facilitylocation).coordinates,20);
   }
 
   onSubmit(Data:any) {

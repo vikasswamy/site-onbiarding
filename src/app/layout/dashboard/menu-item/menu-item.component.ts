@@ -16,6 +16,6 @@ export class MenuItemComponent implements OnInit{
   gotToAddLevel(data:any){
     console.log(data,'::::router data::::');
     this.routre.navigate(["/add-level"],
-      { queryParams: {"siteName":data.parentName,"siteId":data.parentId,"facilityname":data.displayName,"facilityId": data.id,"layout":JSON.stringify(data.geometry)} });
+      { queryParams: {"siteName":data.parentName,"siteId":data.parentId,"facilityname":data.displayName,"facilityId": data.id,"layout":data.geometry} });
   }
 }
